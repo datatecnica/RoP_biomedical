@@ -1,6 +1,6 @@
 ---
 license: other
-license_name: CC-BY-NC-4.0 (Data) + AGPLv3 (Code)
+license_name: cc-by-nc-4.0-data-agplv3-code
 license_link: https://creativecommons.org/licenses/by-nc/4.0/
 task_categories:
 - feature-extraction
