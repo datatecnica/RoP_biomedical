@@ -1,0 +1,28 @@
+COMMERCIAL USE LICENSE
+
+The RoP project (Biomedical Reference of Parameters) is freely available for 
+non-commercial use under the terms of the AGPLv3 (code) and CC-BY-NC-4.0 (data) 
+licenses included in this repository.
+
+COMMERCIAL USE REQUIRES A SEPARATE LICENSE.
+
+If you intend to use RoP or derivatives for commercial purposes, you must obtain 
+a commercial license from DataTecnica.
+
+Contact: info@datatecnica.com
+
+---
+
+What constitutes commercial use:
+- Use in a for-profit organization's internal systems or products
+- Distribution as part of a commercial product or service
+- Use to generate revenue or provide commercial services
+- Use by consultants or contractors on behalf of commercial entities
+
+Non-commercial use includes:
+- Academic research at non-profit institutions
+- Open-source projects for community benefit
+- Personal learning and experimentation
+- Non-profit healthcare and research organizations
+
+For questions about licensing, contact info@datatecnica.com

@@ -1,0 +1,574 @@
+[
+  {
+    "item": "ResourceID",
+    "description": "Stable RoP-internal identifier for a research resource (study, data repository, biorepository, data catalog, code repository, or composite resource). Format: 'RoP-Resource:NNNNNNN'. Distinct from rop_accession (which is a CDE definition identifier) \u2014 ResourceID identifies a *resource* (PPMI, ADNI, AMP-PD, etc.) that produces or hosts data described by RoP CDEs.",
+    "collection": "RoP-Core-Resource",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "ResourceAccession|StudyID|DatasetID",
+    "priority": "Required-for-resource-record",
+    "metadata_": {
+      "format": "RoP-Resource:NNNNNNN",
+      "stability": "never recycled; deprecated resources retain their accession with is_active=false",
+      "rationale": "Resource-level identity is the join key for every other resource-level anchor in this tier and for cross-references from data assets, summary stats datasets, and individual external dataset linkages."
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ResourceName",
+    "description": "Full, human-readable name of the resource. Examples: 'Parkinson's Progression Markers Initiative', 'Alzheimer's Disease Neuroimaging Initiative', 'Accelerating Medicines Partnership Parkinson Disease Knowledge Platform'.",
+    "collection": "RoP-Core-Resource",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "Resource Name|FullName",
+    "priority": "Required-for-resource-record",
+    "metadata_": {
+      "max_length": 512
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ResourceAbbreviation",
+    "description": "Short identifier for the resource (e.g., 'PPMI', 'ADNI', 'AMP-PD', 'GP2', 'NACC', 'DIAN', 'ROS', 'MAP'). Useful as a join key against external datasets that reference resources by abbreviation.",
+    "collection": "RoP-Core-Resource",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "Abbreviation|Acronym",
+    "priority": "Recommended-for-resource-record",
+    "metadata_": {
+      "max_length": 64
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ResourceType",
+    "description": "Categorization of the resource. JSON array (not delimited string) to handle composite resources without ordering ambiguity. CARD Catalog's comma-delimited 'Resource Type' field had non-normalized order ('Data Repository, Biorepository' vs 'Biorepository, Data Repository'); JSON array eliminates this ambiguity.",
+    "collection": "RoP-Core-Resource",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "ResourceCategory|ResourceTypes",
+    "priority": "Required-for-resource-record",
+    "metadata_": {
+      "format": "JSON array",
+      "controlled_values": [
+        "Study",
+        "Cohort",
+        "Data Repository",
+        "Biorepository",
+        "Data Catalog",
+        "Code Repository",
+        "Knowledge Graph",
+        "Reference Dataset",
+        "Tool/Service",
+        "Publication Index",
+        "Other"
+      ],
+      "rationale": "Resources commonly span multiple categories; PPMI is both a Study and (via LONI) effectively a Data Repository. Array-with-controlled-values captures this without delimiter or order ambiguity."
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ResourceDescription",
+    "description": "Free-text description of the resource \u2014 what it is, what data it produces, what its intended use is. One paragraph recommended.",
+    "collection": "RoP-Core-Resource",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "Description|Summary",
+    "priority": "Required-for-resource-record",
+    "metadata_": {
+      "max_length": 4096
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ResourceCoarseModality",
+    "description": "High-level data modalities offered by the resource. JSON array of controlled values (replaces CARD Catalog's comma-delimited string to avoid splitting ambiguity).",
+    "collection": "RoP-Core-Resource",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "DataModalities|CoarseModality",
+    "priority": "Required-for-resource-record",
+    "metadata_": {
+      "format": "JSON array",
+      "controlled_values": [
+        "clinical",
+        "longitudinal",
+        "demographics",
+        "imaging",
+        "genetics",
+        "transcriptomics",
+        "proteomics",
+        "metabolomics",
+        "epigenomics",
+        "microbiome",
+        "single-cell",
+        "spatial-omics",
+        "behavioral",
+        "wearable-sensor",
+        "EHR",
+        "claims",
+        "biospecimen-only",
+        "computational-tool"
+      ]
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ResourceGranularModality",
+    "description": "Detailed modality descriptors (free text array). Examples: 'MRI', 'PET-amyloid', 'PET-tau', 'CSF biomarkers', 'WGS', 'genotyping array', 'bulk RNA-seq', 'snRNA-seq', 'somatosensory testing'. Free text because granular modalities evolve faster than a controlled vocabulary can keep up.",
+    "collection": "RoP-Core-Resource",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "DetailedModalities|GranularModality",
+    "priority": "Recommended-for-resource-record",
+    "metadata_": {
+      "format": "JSON array of strings"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ResourceDiseases",
+    "description": "Diseases or conditions covered by the resource. JSON array; each entry pairs a free-text name with a controlled vocabulary code (Mondo, OMIM, HPO, MeSH preferred). Replaces CARD Catalog's free-text-only convention which mixed comma and semicolon delimiters within and across rows.",
+    "collection": "RoP-Core-Resource",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "Diseases|Conditions",
+    "priority": "Required-for-resource-record",
+    "metadata_": {
+      "format": "JSON array",
+      "schema_per_entry": {
+        "name": "Free-text disease name (e.g., 'Familial Alzheimer Disease')",
+        "code": "VOCAB:identifier (e.g., 'Mondo:0007089')",
+        "vocabulary": "Mondo | OMIM | HPO | MeSH | Other"
+      }
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ResourceSampleSize",
+    "description": "Structured sample size representation. JSON object with total participant count and optional case/control breakdown. Replaces CARD Catalog's free-text 'Sample Size' field which was not numeric and varied in convention ('766 participants (664 cases, 102 controls)' vs 'Not applicable' vs '~50,000').",
+    "collection": "RoP-Core-Resource",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "SampleSize|N",
+    "priority": "Required-for-resource-record",
+    "metadata_": {
+      "format": "JSON object",
+      "schema": {
+        "total_n": "integer total participant count; null when not applicable",
+        "cases_n": "integer cases; null when not case-control",
+        "controls_n": "integer controls; null when not case-control",
+        "biosamples_n": "integer biosamples (when distinct from participants)",
+        "as_of_date": "ISO date the count was current",
+        "is_estimate": "boolean \u2014 true when the count is approximate or rounded",
+        "notes": "free text for unusual ascertainment patterns"
+      },
+      "example": {
+        "total_n": 766,
+        "cases_n": 664,
+        "controls_n": 102,
+        "as_of_date": "2026-03-16",
+        "is_estimate": false
+      }
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ResourceAccessURL",
+    "description": "Primary access URL for the resource. The canonical landing page. Additional URLs (alternative portals, archived snapshots, region-specific mirrors) go in ResourceAlternativeURLs.",
+    "collection": "RoP-Core-Resource",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "PrimaryURL|AccessURL",
+    "priority": "Required-for-resource-record",
+    "metadata_": {
+      "max_length": 2048
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ResourceAlternativeURLs",
+    "description": "Additional URLs associated with the resource (alternative portals, archived snapshots, region-specific mirrors). JSON array of URL strings. Replaces CARD Catalog's Python-list-literal-string convention which required ast.literal_eval to parse \u2014 JSON array is the standard structured representation.",
+    "collection": "RoP-Core-Resource",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "SecondaryURLs|MirrorURLs",
+    "priority": "Optional",
+    "metadata_": {
+      "format": "JSON array of URL strings"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ResourceFAIRScore",
+    "description": "Numeric FAIR-compliance score on a 0-9 scale (carried over from CARD Catalog convention). Higher is better. The component metrics that contribute to the score are recorded in ResourceFAIRIssues.",
+    "collection": "RoP-Core-Resource",
+    "item_type": "numeric",
+    "values": null,
+    "alternate_names": "FAIRScore",
+    "priority": "Recommended-for-resource-record",
+    "metadata_": {
+      "scale": "0-9",
+      "interpretation": "0-3: poor FAIR adherence; 4-6: partial; 7-9: high",
+      "source": "Carried over from CARD Catalog scoring methodology"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated",
+    "unit_of_measure": "1",
+    "unit_vocabulary": "UCUM",
+    "plausible_min": 0,
+    "plausible_max": 9
+  },
+  {
+    "item": "ResourceFAIRIssues",
+    "description": "Specific FAIR shortcomings flagged for this resource. JSON array of tag strings. Common tags from CARD Catalog: 'No Version Info', 'No Environment Spec', 'No Container', 'No Dependencies', 'No README', 'No DOI', 'No License', 'No Persistent Identifier', 'No Metadata Standard', 'No DUA', 'Authentication-Walled', 'Region-Locked'.",
+    "collection": "RoP-Core-Resource",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "FAIRIssues|FAIRGaps",
+    "priority": "Recommended-when-ResourceFAIRScore-present",
+    "metadata_": {
+      "format": "JSON array of tag strings"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ResourceFAIRNotes",
+    "description": "Free-text reviewer commentary on FAIR adherence. One- to two-sentence note from the curator who scored the resource.",
+    "collection": "RoP-Core-Resource",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "FAIRNotes|FAIRComments",
+    "priority": "Optional",
+    "metadata_": {
+      "max_length": 2048
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ResourceCurator",
+    "description": "Person(s) who reviewed and curated this resource record. JSON array of curator entries with structured identity. Replaces CARD Catalog's free-text 'Reviewer' field that used slash-delimited initials (e.g., 'Mette/Pietro') for joint review.",
+    "collection": "RoP-Core-Resource",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "Reviewer|Curators",
+    "priority": "Required-for-resource-record",
+    "metadata_": {
+      "format": "JSON array",
+      "schema_per_entry": {
+        "name": "Curator name",
+        "orcid": "ORCID iD when available",
+        "affiliation": "Institution",
+        "review_role": "primary | secondary | joint | LLM-assisted"
+      }
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ResourceDateAdded",
+    "description": "Date the resource was first added to the catalog. ISO-8601 date.",
+    "collection": "RoP-Core-Resource",
+    "item_type": "date",
+    "values": null,
+    "alternate_names": "DateAdded|DateCataloged",
+    "priority": "Required-for-resource-record",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ResourceDateLastUpdated",
+    "description": "Date this resource record was last reviewed or updated. Distinct from the resource's own internal release/version date.",
+    "collection": "RoP-Core-Resource",
+    "item_type": "date",
+    "values": null,
+    "alternate_names": "DateLastReviewed",
+    "priority": "Recommended-for-resource-record",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ResourceProvenanceSource",
+    "description": "How this resource record was created. Distinguishes hand-curated from automatically discovered records, supporting the two-source model that CARD Catalog uses (manual-curation vs automated-enrichment-discovery).",
+    "collection": "RoP-Core-Resource",
+    "item_type": "enum",
+    "values": "manual-curation|automated-discovery|automated-discovery-promoted-to-curated|imported-from-external-catalog|user-submitted",
+    "alternate_names": "ProvenanceSource|RecordOrigin",
+    "priority": "Required-for-resource-record",
+    "metadata_": {
+      "value_definitions": {
+        "manual-curation": "Hand-vetted by a curator from inception",
+        "automated-discovery": "Discovered by the enrichment pipeline; awaiting human review (analogous to CARD Catalog's new_corpus table)",
+        "automated-discovery-promoted-to-curated": "Originally discovered automatically, then human-reviewed and promoted to the curated set",
+        "imported-from-external-catalog": "Imported from an external catalog (CARD Catalog, BioPortal, etc.) with provenance preserved",
+        "user-submitted": "Submitted by an external user via the proposal workflow"
+      }
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ResourceLinkedDataAssets",
+    "description": "Tier 8 DataAssetURI references owned or hosted by this resource. JSON array of asset URIs. Closes the loop between resource-level metadata and the binary data the resource provides \u2014 a cohort declaring data assets in Tier 8 can resolve which resource hosts each asset by joining on this field.",
+    "collection": "RoP-Core-Resource",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "OwnedDataAssets|HostedDataAssets",
+    "priority": "Recommended-for-resource-record",
+    "metadata_": {
+      "format": "JSON array of DataAssetURI strings"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ResourceLinkedSummaryStats",
+    "description": "Tier 9 summary statistics datasets produced by analyses on this resource's data. JSON array of SummaryStatsResultsURI references. Enables traversal from resource \u2192 derived analyses for downstream meta-analysis discovery.",
+    "collection": "RoP-Core-Resource",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "DerivedSummaryStats",
+    "priority": "Optional",
+    "metadata_": {
+      "format": "JSON array of summary stats URIs"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ResourcePublications",
+    "description": "Publications associated with this resource. JSON array of {pmid, doi, pmc_id, title, year, citation_type} entries. Citation type distinguishes the publication's role: produced-by-resource (the resource's own publications), uses-resource (independent papers using the resource's data), method-paper, or cohort-description.",
+    "collection": "RoP-Core-Resource",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "AssociatedPublications|Publications",
+    "priority": "Recommended-for-resource-record",
+    "metadata_": {
+      "format": "JSON array",
+      "schema_per_entry": {
+        "pmid": "PubMed ID",
+        "doi": "Digital Object Identifier",
+        "pmc_id": "PubMed Central ID (when open access)",
+        "title": "publication title",
+        "year": "publication year",
+        "citation_type": "produced-by-resource | uses-resource | method-paper | cohort-description | review"
+      }
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ResourceCodeRepositories",
+    "description": "Code repositories associated with this resource. JSON array of {url, owner, languages, purpose, fair_score, fair_issues} entries. Purpose distinguishes processing-pipeline, analysis-code, data-loader, web-portal, or other.",
+    "collection": "RoP-Core-Resource",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "AssociatedCode|Repositories",
+    "priority": "Recommended-for-resource-record",
+    "metadata_": {
+      "format": "JSON array",
+      "schema_per_entry": {
+        "url": "Repository URL (typically GitHub)",
+        "owner": "GitHub username or organization",
+        "languages": "JSON array of programming languages",
+        "purpose": "processing-pipeline | analysis-code | data-loader | web-portal | other",
+        "fair_score": "0-9 FAIR score for the repository (per CARD Catalog convention)",
+        "fair_issues": "JSON array of FAIR issue tags",
+        "biomedical_relevance": "YES | NO | UNCLEAR \u2014 LLM verdict",
+        "code_summary": "LLM-generated summary of repository function"
+      },
+      "rationale": "Improves on CARD Catalog's flat code table by structuring per-repository attributes consistently. The 'YES/NO/UNCLEAR' biomedical relevance verdict is preserved from CARD methodology."
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ResourceParentResources",
+    "description": "When this resource is derived from or aggregates other resources (AMP-PD aggregates PPMI + others; Path-ND uses NACC, GP2, PPMI, ADSP-PHC), the parent ResourceID values. JSON array. Enables provenance traversal: any analysis on a derived resource can be traced back to contributing primary resources.",
+    "collection": "RoP-Core-Resource",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "ParentResources|AggregatedFrom",
+    "priority": "Required-when-derived-resource",
+    "metadata_": {
+      "format": "JSON array of ResourceID strings"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ResourceCellLineMetadata",
+    "description": "When the resource is a cell-line catalog (analogous to iNDI), structured metadata about the cell-line collection. JSON object with parental_line, genome_assembly, distribution_route, and per-line counts. Captures the iNDI-style 'mostly-constant fields' (KOLF2.1J parental, GRCh38, JAX distribution) without forcing them into per-row anchors.",
+    "collection": "RoP-Core-Resource",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "CellLineCollectionMetadata",
+    "priority": "Required-when-cell-line-resource",
+    "metadata_": {
+      "format": "JSON object",
+      "schema": {
+        "parental_line": "Predominant parental line (e.g., 'KOLF2.1J' for iNDI)",
+        "genome_assembly": "Reference assembly all variants are called against",
+        "distribution_route": "Procurement URL or distributor name (e.g., 'JAX Mice & Services')",
+        "n_lines_total": "integer total cell lines in collection",
+        "n_lines_engineered_controls": "integer engineered control lines (no associated condition)",
+        "edit_types": "JSON array of edit types in the collection (SNV, DEL, REV, HALO, KI, PTC, INDEL, etc.)",
+        "guide_indexing_scheme": "Description of CRISPR guide naming convention if relevant"
+      }
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ResourceLinkedGovernance",
+    "description": "Reference to the Tier 7 governance row(s) that apply to this resource. Most resources inherit governance from a parent cohort, but resources can carry their own governance (e.g., the resource is a public catalog with open access while the underlying cohort is controlled-access). JSON array of governance row references.",
+    "collection": "RoP-Core-Resource",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "GovernanceRecords",
+    "priority": "Recommended-for-resource-record",
+    "metadata_": {
+      "format": "JSON array of governance row identifiers"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ResourceImportedFromCatalog",
+    "description": "When ResourceProvenanceSource is 'imported-from-external-catalog', the source catalog and original record identifier. Preserves CARD Catalog \u2192 RoP migration provenance and supports bidirectional traceability.",
+    "collection": "RoP-Core-Resource",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "ExternalCatalogSource",
+    "priority": "Required-when-imported-from-external-catalog",
+    "metadata_": {
+      "format": "JSON object",
+      "schema": {
+        "catalog_name": "Source catalog (e.g., 'CARD Catalog', 'BioPortal', 'OBO Foundry')",
+        "catalog_version": "Catalog version or snapshot date",
+        "original_record_id": "Identifier in the source catalog",
+        "import_date": "ISO date of import",
+        "import_curator": "Who performed the import"
+      }
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  }
+]

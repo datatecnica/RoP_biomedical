@@ -1,0 +1,300 @@
+[
+  {
+    "item": "ClinicalConceptDomain",
+    "description": "OMOP CDM domain classification of the clinical concept. Determines which downstream tables and analyses apply: a Condition concept lands in OMOP CONDITION_OCCURRENCE, a Measurement concept in MEASUREMENT, a Drug in DRUG_EXPOSURE, etc. RoP follows OMOP's domain enumeration as the controlling vocabulary for clinical concept categorization.",
+    "collection": "RoP-Core-ClinicalConcepts",
+    "item_type": "enum",
+    "values": "Condition|Drug|Procedure|Measurement|Observation|Device|Specimen|Visit|Death|Note|Episode|Provider|Cost|PayerPlan|Geography|Other",
+    "alternate_names": "Domain|ConceptDomain",
+    "priority": "Required-for-clinical-concept-record",
+    "metadata_": {
+      "value_definitions": {
+        "Condition": "Diagnoses, signs, symptoms, clinical findings (SNOMED, ICD-10/11, ICD-9 source vocabs)",
+        "Drug": "Drug exposures, formulations, ingredients (RxNorm, ATC, DM+D source vocabs)",
+        "Procedure": "Procedures performed (SNOMED-Procedure, CPT, HCPCS, ICD-10-PCS source vocabs)",
+        "Measurement": "Lab tests, vital signs, structured measurements (LOINC primarily, SNOMED-Measurement secondarily)",
+        "Observation": "Clinical observations not fitting other domains (SNOMED-Observable, structured questionnaire items)",
+        "Device": "Medical devices used (SNOMED-Device, GMDN, GUDID source vocabs)",
+        "Specimen": "Biological specimens (SNOMED-Specimen \u2014 distinct from Theme 6 biosample which is RoP-internal lineage)",
+        "Visit": "Healthcare encounters (SNOMED-VisitType, OMOP-Visit source vocabs)",
+        "Death": "Death events and causes (ICD-10 underlying cause primarily)",
+        "Note": "Clinical notes and documents (LOINC-Document, SNOMED-Document)",
+        "Episode": "Care episodes spanning multiple visits (RoP-derived primarily)",
+        "Other": "Extension category for concepts not yet domain-classified"
+      },
+      "rationale": "Adopting OMOP's domain classification as the controlling vocabulary aligns RoP's clinical concept layer with the largest established harmonization standard. ~200M-row clinical datasets in the OHDSI network already use this classification."
+    },
+    "source_authority": "OMOP",
+    "source_version": "Athena-2026-03",
+    "source_url": "https://athena.ohdsi.org/search-terms/terms",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ClinicalConceptStandardCode",
+    "description": "OMOP concept_id \u2014 the canonical pivot identifier across vocabularies. Two clinical concept rows referencing the same standard_code are semantically equivalent regardless of source vocabulary. Numeric integer; 0 indicates unmapped.",
+    "collection": "RoP-Core-ClinicalConcepts",
+    "item_type": "numeric",
+    "values": null,
+    "alternate_names": "ConceptID|OMOPConceptID|StandardCode",
+    "priority": "Required-for-clinical-concept-record",
+    "metadata_": {
+      "format": "OMOP concept_id (positive integer; 0 = unmapped)",
+      "rationale": "OMOP concept_id is the only cross-vocabulary identifier that scales across all clinical domains. Without it, every analysis tool reinvents cross-vocab mapping from scratch."
+    },
+    "source_authority": "OMOP",
+    "source_version": "Athena-2026-03",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated",
+    "unit_of_measure": "1",
+    "unit_vocabulary": "UCUM"
+  },
+  {
+    "item": "ClinicalConceptStandardName",
+    "description": "Preferred concept name in the standard vocabulary (OMOP concept.concept_name). Examples: 'Type 2 diabetes mellitus', 'Metformin 500 MG Oral Tablet', 'Glucose [Mass/volume] in Serum or Plasma', 'Echocardiogram'.",
+    "collection": "RoP-Core-ClinicalConcepts",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "ConceptName|PreferredName",
+    "priority": "Required-for-clinical-concept-record",
+    "metadata_": {
+      "max_length": 512
+    },
+    "source_authority": "OMOP",
+    "source_version": "Athena-2026-03",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ClinicalConceptStandardVocabulary",
+    "description": "Standard vocabulary that OMOP designates as authoritative for this concept's domain. SNOMED for most Conditions, RxNorm for Drugs, LOINC for Measurements, SNOMED+CPT for Procedures, MedDRA for adverse events. The same concept may have a non-standard representation in many source vocabularies but a single canonical standard.",
+    "collection": "RoP-Core-ClinicalConcepts",
+    "item_type": "enum",
+    "values": "SNOMED|LOINC|RxNorm|RxNorm-Extension|ATC|MedDRA|ICD10CM|ICD9CM|ICD10|ICD9|CPT4|HCPCS|ICD10PCS|HemOnc|NDC|Cancer-Modifier|UCUM|OMOP-Genomic|GGR|JMDC|Other",
+    "alternate_names": "StandardVocabulary",
+    "priority": "Required-for-clinical-concept-record",
+    "metadata_": {
+      "domain_to_standard_vocab_map": {
+        "Condition": "SNOMED",
+        "Drug": "RxNorm",
+        "Procedure": "SNOMED+CPT4+HCPCS",
+        "Measurement": "LOINC",
+        "Observation": "SNOMED+LOINC",
+        "Device": "SNOMED",
+        "Specimen": "SNOMED"
+      }
+    },
+    "source_authority": "OMOP",
+    "source_version": "Athena-2026-03",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ClinicalConceptSourceCode",
+    "description": "Source-vocabulary code as captured at the data origin. Examples: 'E11.9' (ICD-10-CM for type 2 diabetes), '250.00' (ICD-9-CM for the same), '2345-7' (LOINC for serum glucose), '6809' (RxNorm ingredient code for metformin), 'I26.9' (ICD-10 for unspecified pulmonary embolism). The source code is what was actually recorded; the standard code is OMOP's harmonized form.",
+    "collection": "RoP-Core-ClinicalConcepts",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "SourceCode|OriginalCode",
+    "priority": "Required-for-clinical-concept-record",
+    "metadata_": {
+      "max_length": 128
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ClinicalConceptSourceVocabulary",
+    "description": "Source vocabulary the source code originated from. Same enum as ClinicalConceptStandardVocabulary plus historical/regional vocabularies (ICD-9, ICD-9-CM, KCD-7, JMDC, etc.) that aren't standard but are commonly seen in source data.",
+    "collection": "RoP-Core-ClinicalConcepts",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "SourceVocabulary",
+    "priority": "Required-for-clinical-concept-record",
+    "metadata_": {
+      "max_length": 64
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ClinicalConceptSourceVersion",
+    "description": "Release version of the source vocabulary. Critical because coding conventions change across releases (ICD-10-CM 2023 vs 2024, RxNorm monthly releases, LOINC 2.78). A concept's interpretation can shift across versions even when the code string is identical.",
+    "collection": "RoP-Core-ClinicalConcepts",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "SourceVersion|VocabReleaseVersion",
+    "priority": "Required-for-clinical-concept-record",
+    "metadata_": {
+      "max_length": 64
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ClinicalConceptAlternativeCodes",
+    "description": "Cross-vocabulary mappings for this concept. JSON array of {vocabulary, code, version, mapping_type} entries. Provides the cross-vocab lookup graph: a concept that is SNOMED:44054006 in OMOP-standard form might map to ICD-10:E11.9, ICD-9-CM:250.00, MeSH:D003924, KCD-7:E11. Precomputed at bundle build time from OMOP CONCEPT_RELATIONSHIP.",
+    "collection": "RoP-Core-ClinicalConcepts",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "CrossVocabMappings|AlternativeCodes",
+    "priority": "Recommended-for-clinical-concept-record",
+    "metadata_": {
+      "format": "JSON array",
+      "schema_per_entry": {
+        "vocabulary": "Vocabulary name (ICD10CM, SNOMED, RxNorm, etc.)",
+        "code": "Code in that vocabulary",
+        "version": "Vocabulary release version",
+        "mapping_type": "Maps to | Maps to value | Source-derived | RxNorm has ing | etc. (OMOP relationship_id)",
+        "mapping_quality": "exact | broader | narrower | related"
+      }
+    },
+    "source_authority": "OMOP",
+    "source_version": "Athena-2026-03",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ClinicalConceptHierarchyAncestors",
+    "description": "Concept ancestors in the OMOP CONCEPT_ANCESTOR table. JSON array of {ancestor_concept_id, min_separation, max_separation} entries. Enables 'rolled-up' analyses: querying for 'Type 2 diabetes' should also surface concepts descending from the parent 'Diabetes mellitus'. Critical for cohort-definition reproducibility \u2014 without explicit hierarchy, two analysts asking 'how many T2D cases' get different answers.",
+    "collection": "RoP-Core-ClinicalConcepts",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "Ancestors|ParentConcepts",
+    "priority": "Recommended-for-clinical-concept-record",
+    "metadata_": {
+      "format": "JSON array",
+      "source": "OMOP CONCEPT_ANCESTOR table",
+      "schema_per_entry": {
+        "ancestor_concept_id": "OMOP concept_id of ancestor",
+        "min_separation": "minimum hierarchy distance (1 = parent)",
+        "max_separation": "maximum hierarchy distance"
+      }
+    },
+    "source_authority": "OMOP",
+    "source_version": "Athena-2026-03",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ClinicalConceptValidPeriod",
+    "description": "OMOP-style validity window. JSON object {valid_start_date, valid_end_date, invalid_reason}. Concepts retire over time as vocabularies update; an analysis using a retired code should know it's retired. Default valid_end_date = '2099-12-31' (still valid).",
+    "collection": "RoP-Core-ClinicalConcepts",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "ValidityPeriod",
+    "priority": "Recommended-for-clinical-concept-record",
+    "metadata_": {
+      "format": "JSON object",
+      "schema": {
+        "valid_start_date": "ISO date concept became valid",
+        "valid_end_date": "ISO date concept retired (default 2099-12-31)",
+        "invalid_reason": "null | 'D' (deleted) | 'U' (upgraded/replaced)"
+      }
+    },
+    "source_authority": "OMOP",
+    "source_version": "Athena-2026-03",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ClinicalConceptSemanticTags",
+    "description": "Semantic tags inherited from the source vocabulary. SNOMED uses semantic tags like 'disorder', 'finding', 'procedure', 'body structure', 'substance', 'organism'. These guide downstream interpretation: a 'finding' is observable but doesn't necessarily indicate disease, while a 'disorder' implies pathology. JSON array.",
+    "collection": "RoP-Core-ClinicalConcepts",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "SemanticTags|ConceptClass",
+    "priority": "Recommended-for-clinical-concept-record",
+    "metadata_": {
+      "format": "JSON array of tag strings",
+      "snomed_examples": [
+        "disorder",
+        "finding",
+        "procedure",
+        "body structure",
+        "substance",
+        "organism",
+        "qualifier value",
+        "morphologic abnormality",
+        "cell structure"
+      ]
+    },
+    "source_authority": "OMOP",
+    "source_version": "Athena-2026-03",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ClinicalConceptValueSetMembership",
+    "description": "Value sets this concept belongs to. JSON array of {value_set_id, value_set_name, value_set_authority} entries. Enables phenotype-definition reuse: a 'type 2 diabetes broad' value set bundles dozens of related concepts; cohort definitions reference the value set rather than enumerating concepts. Examples: PheKB phenotypes, OHDSI Phoebe phenotypes, ATLAS-derived cohort definitions.",
+    "collection": "RoP-Core-ClinicalConcepts",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "ValueSetMembership|PhenotypeMembership",
+    "priority": "Optional",
+    "metadata_": {
+      "format": "JSON array",
+      "schema_per_entry": {
+        "value_set_id": "Value set identifier",
+        "value_set_name": "Human-readable value set name",
+        "value_set_authority": "PheKB | OHDSI-Phoebe | NLM-VSAC | DataTecnica | Other",
+        "membership_role": "core | broad | narrow | inclusion | exclusion"
+      }
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ClinicalConceptUnitConcept",
+    "description": "For Measurement-domain concepts, the OMOP concept_id of the canonical unit of measure. Example: serum glucose (LOINC 2345-7, OMOP 3004501) has canonical unit mg/dL (UCUM 'mg/dL', OMOP 8840). The unit is part of the concept's identity for measurements \u2014 'glucose' alone is ambiguous between mg/dL and mmol/L. Null for non-Measurement domains.",
+    "collection": "RoP-Core-ClinicalConcepts",
+    "item_type": "numeric",
+    "values": null,
+    "alternate_names": "UnitConceptID|CanonicalUnit",
+    "priority": "Required-when-domain-Measurement",
+    "metadata_": {
+      "format": "OMOP concept_id pointing into UCUM-domain concepts",
+      "rationale": "Without unit-as-concept, mg/dL vs mmol/L vs mg/L ambiguity becomes silent error in cross-cohort meta-analysis. Resolving the unit to a concept_id makes the unit explicit and machine-checkable."
+    },
+    "source_authority": "OMOP",
+    "source_version": "Athena-2026-03",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated",
+    "unit_of_measure": "1",
+    "unit_vocabulary": "UCUM"
+  }
+]

@@ -1,0 +1,311 @@
+[
+  {
+    "item": "DataAssetURI",
+    "description": "Canonical reference to an external data asset (VCF, BAM, CRAM, counts matrix, h5ad, DICOM, NIfTI, etc.) associated with this biosample, individual, or observation. GA4GH Data Repository Service (DRS) URIs are strongly preferred (format: 'drs://hostname/object_id') because they support federated resolution, integrity verification, and standardized authorization across heterogeneous data repositories. When DRS is unavailable, S3/GCS/Azure-blob URIs and HTTPS URLs are accepted; FTP is discouraged but tolerated for legacy archives.",
+    "collection": "RoP-Core-DataAssets",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "AssetURI|FileReference|DataLocation",
+    "priority": "Required-when-data-asset-present",
+    "metadata_": {
+      "preferred_format": "drs://hostname/object_id",
+      "fallback_formats": [
+        "s3://bucket/key",
+        "gs://bucket/object",
+        "azure://container/blob",
+        "https://...",
+        "ftp://..."
+      ],
+      "ga4gh_drs_spec": "https://www.ga4gh.org/product/data-repository-service-drs/",
+      "rationale": "Without a structured asset reference, the connection between a biosample CDE row and the actual data file lives in unstructured documentation and is routinely lost when datasets move between repositories. DRS URIs additionally provide a federation layer: a single URI resolves through any compliant repository regardless of the underlying object store.",
+      "max_length": 2048
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "DataAssetType",
+    "description": "Category of data asset. Determines which downstream tools are appropriate for retrieval, indexing, and analysis. Intentionally broad to cover omics (VCF/BAM/CRAM/FASTQ/counts/h5ad), imaging (DICOM/NIfTI/TIFF), proteomics (mzML/MGF), and tabular formats (Parquet/HDF5/Zarr/CSV/TSV).",
+    "collection": "RoP-Core-DataAssets",
+    "item_type": "enum",
+    "values": "VCF|gVCF|BCF|BAM|CRAM|SAM|FASTQ|counts-matrix|proteomics-matrix|methylation-matrix|expression-matrix|h5ad|loom|MatrixMarket|Parquet|HDF5|Zarr|DICOM|NIfTI|TIFF|MGF|mzML|imzML|GFF|GTF|BED|PDF|TSV|CSV|JSON|other",
+    "alternate_names": "AssetType|FileType",
+    "priority": "Required-when-data-asset-present",
+    "metadata_": {
+      "extensible": "When 'other' is used, populate metadata_.asset_type_other with the specific format name."
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "DataAssetFormat",
+    "description": "Specific format version of the asset. Critical for downstream parser compatibility \u2014 VCFv4.1 and VCFv4.2 differ in non-trivial ways, BAM 1.6 introduced changes that pre-1.6 readers don't handle, AnnData minor versions add fields. Examples: 'VCFv4.2', 'BAMv1.6', 'CRAM-3.1', 'AnnData-0.10', 'DICOM-3.0', 'NIfTI-1.1', 'Parquet-2.6', 'MatrixMarket-2.0'.",
+    "collection": "RoP-Core-DataAssets",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "FormatVersion|AssetFormat",
+    "priority": "Required-when-DataAssetURI-present",
+    "metadata_": {
+      "max_length": 64
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "DataAssetSampleScope",
+    "description": "Whether this asset contains data for one or many individuals/biosamples. Determines downstream subsetting, demultiplexing, and join logic. A single-sample VCF and a joint-called multi-sample VCF have identical format but require very different processing.",
+    "collection": "RoP-Core-DataAssets",
+    "item_type": "enum",
+    "values": "per-individual|per-biosample|per-cohort|per-batch|per-tissue-block|aggregate-derived|other",
+    "alternate_names": "AssetScope|ScopeOfAsset",
+    "priority": "Required-when-DataAssetURI-present",
+    "metadata_": {
+      "value_definitions": {
+        "per-individual": "Asset contains data for a single individual (may aggregate multiple biosamples from that individual)",
+        "per-biosample": "Asset contains data for a single biosample (e.g., FASTQ from one sequencing library)",
+        "per-cohort": "Asset contains data for many individuals jointly (e.g., joint-called multi-sample VCF, expression matrix)",
+        "per-batch": "Asset contains data for one processing batch (e.g., one 10X run, one mass-spec batch)",
+        "per-tissue-block": "Asset contains data spanning sub-samples from a single tissue block (e.g., spatial transcriptomics)",
+        "aggregate-derived": "Asset is a derived statistic that no longer references individual-level data (e.g., GWAS summary stats)"
+      }
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "DataAssetAccessProtocol",
+    "description": "Protocol required to access the asset. Determines what client tools and authentication mechanisms are needed.",
+    "collection": "RoP-Core-DataAssets",
+    "item_type": "enum",
+    "values": "DRS|htsget|S3|GCS|Azure-blob|HTTPS|HTTP|SFTP|FTP|local-filesystem|other",
+    "alternate_names": "AccessProtocol|TransferProtocol",
+    "priority": "Required-when-DataAssetURI-present",
+    "metadata_": {
+      "ga4gh_alignment": "DRS and htsget are GA4GH-standardized protocols designed for biomedical data; preferred when the asset and access infrastructure support them."
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "DataAssetIndexURI",
+    "description": "URI of the companion index file when applicable. VCF\u2192TBI/CSI, BCF\u2192CSI, BAM\u2192BAI/CSI, CRAM\u2192CRAI, GFF/GTF\u2192TBI/CSI. Required for random access; without an index, downstream tools must fall back to full-file scans, which is prohibitive for cohort-scale data. Same URI scheme rules as DataAssetURI (DRS preferred).",
+    "collection": "RoP-Core-DataAssets",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "IndexURI|IndexFileLocation",
+    "priority": "Required-when-data-asset-indexable",
+    "metadata_": {
+      "indexable_types": [
+        "VCF",
+        "gVCF",
+        "BCF",
+        "BAM",
+        "CRAM",
+        "GFF",
+        "GTF",
+        "BED"
+      ],
+      "max_length": 2048
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "DataAssetChecksum",
+    "description": "Cryptographic checksum of the asset for integrity verification. SHA-256 strongly preferred for new submissions; MD5 accepted for legacy assets. Required to detect silent corruption during transfer or storage migration.",
+    "collection": "RoP-Core-DataAssets",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "AssetChecksum|FileHash",
+    "priority": "Recommended-when-DataAssetURI-present",
+    "metadata_": {
+      "format": "hex string; algorithm specified in DataAssetChecksumAlgorithm",
+      "preferred_algorithm": "SHA-256"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "DataAssetChecksumAlgorithm",
+    "description": "Algorithm used to compute DataAssetChecksum. Required when DataAssetChecksum is populated.",
+    "collection": "RoP-Core-DataAssets",
+    "item_type": "enum",
+    "values": "SHA-256|SHA-1|SHA-512|MD5|etag|crc32c|other",
+    "alternate_names": "ChecksumAlgorithm|HashAlgorithm",
+    "priority": "Required-when-DataAssetChecksum-present",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "DataAssetSizeBytes",
+    "description": "Asset size in bytes. Used for storage planning, bandwidth estimation, and a coarse integrity check.",
+    "collection": "RoP-Core-DataAssets",
+    "item_type": "numeric",
+    "values": null,
+    "alternate_names": "AssetSize|FileSizeBytes",
+    "priority": "Recommended-when-DataAssetURI-present",
+    "metadata_": {
+      "validation": "non-negative integer"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated",
+    "unit_of_measure": "By",
+    "unit_vocabulary": "UCUM",
+    "plausible_min": 0,
+    "plausible_max": 1000000000000000.0
+  },
+  {
+    "item": "DataAssetGA4GHPassportRequired",
+    "description": "Whether access to this asset requires a GA4GH Passport visa. When true, downstream tooling must be configured with the appropriate broker credentials, and the consumer must hold a valid visa with the required scope. The expected visa scopes are recorded in DataAssetGA4GHVisaTypes.",
+    "collection": "RoP-Core-DataAssets",
+    "item_type": "binary",
+    "values": "true|false|unknown",
+    "alternate_names": "PassportRequired|GA4GHAuthRequired",
+    "priority": "Required-when-DataAssetURI-present",
+    "metadata_": {
+      "ga4gh_passport_spec": "https://www.ga4gh.org/product/ga4gh-passports/"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "DataAssetGA4GHVisaTypes",
+    "description": "Required GA4GH Passport visa types when DataAssetGA4GHPassportRequired=true. Pipe-delimited list of visa scopes. Common values: 'AffiliationAndRole', 'AcceptedTermsAndPolicies', 'ResearcherStatus', 'ControlledAccessGrants', 'LinkedIdentities'.",
+    "collection": "RoP-Core-DataAssets",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "VisaTypes|RequiredScopes",
+    "priority": "Required-when-DataAssetGA4GHPassportRequired-true",
+    "metadata_": {
+      "format": "pipe-delimited list of visa type names"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "DataAssetReferenceAssembly",
+    "description": "Reference assembly the asset is aligned/called against, when applicable to the asset type. Mirrors Tier 5's ReferenceAssembly but at asset granularity \u2014 an individual may have BAMs against GRCh38 and CRAMs re-aligned against T2T-CHM13 as separate rows with distinct values. Null for asset types where reference assembly is not meaningful (proteomics matrices, FASTQ raw reads, imaging).",
+    "collection": "RoP-Core-DataAssets",
+    "item_type": "enum",
+    "values": "GRCh38|GRCh37|T2T-CHM13|hg38|hg19|mm10|mm39|GRCm39|Other|NotApplicable",
+    "alternate_names": "AssetReferenceGenome|AssetGenomeBuild",
+    "priority": "Required-when-data-asset-genomic",
+    "metadata_": {
+      "applicable_asset_types": [
+        "VCF",
+        "gVCF",
+        "BCF",
+        "BAM",
+        "CRAM",
+        "SAM",
+        "GFF",
+        "GTF",
+        "BED",
+        "counts-matrix",
+        "expression-matrix",
+        "methylation-matrix"
+      ]
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "DataAssetGeneratedAt",
+    "description": "Timestamp when the asset was produced by its pipeline. Aligns with PipelineSourceCommit timeline; allows tracking of re-processing events when the same biosample yields multiple asset generations.",
+    "collection": "RoP-Core-DataAssets",
+    "item_type": "date",
+    "values": null,
+    "alternate_names": "AssetGenerationDate",
+    "priority": "Recommended-when-DataAssetURI-present",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "DataAssetReadmeURI",
+    "description": "URI of human-readable documentation for the asset (README, data dictionary, methods document, or asset-specific addendum to the cohort-level documentation). Particularly valuable for derived assets (counts matrices, processed h5ad files) where the methodology behind the values matters as much as the values themselves.",
+    "collection": "RoP-Core-DataAssets",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "DocumentationURI|ReadmeURL",
+    "priority": "Recommended-when-DataAssetURI-present",
+    "metadata_": {
+      "max_length": 2048
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "DataAssetLicense",
+    "description": "License governing this specific asset, when distinct from the cohort-default DUA recorded in Tier 7. Common pattern: derivative datasets (counts matrices derived from controlled-access raw reads, summary statistics derived from individual-level data) carry less-restrictive sharing terms than their source. Free text or SPDX identifier.",
+    "collection": "RoP-Core-DataAssets",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "AssetLicense|FileLicense",
+    "priority": "Recommended",
+    "metadata_": {
+      "preferred_format": "SPDX identifier (e.g., 'CC-BY-4.0', 'CC0-1.0', 'ODbL-1.0') or 'inherits-cohort-DUA'"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  }
+]

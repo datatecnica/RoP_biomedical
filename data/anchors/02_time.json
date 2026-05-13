@@ -1,0 +1,166 @@
+[
+  {
+    "item": "VisitBaselineDate",
+    "description": "Calendar date of the participant's enrollment / baseline visit. Required anchor for converting between visit_number, visit_date, and years_from_enrollment representations.",
+    "collection": "RoP-Core-Time",
+    "item_type": "date",
+    "values": "YYYY-MM[-DD]",
+    "alternate_names": "BaselineDate|EnrollmentDate|StudyEntryDate",
+    "priority": "Required",
+    "metadata_": {
+      "format": "ISO-8601-partial",
+      "phi": true,
+      "anchor": true
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "VisitDate",
+    "description": "Calendar date the study visit was conducted.",
+    "collection": "RoP-Core-Time",
+    "item_type": "date",
+    "values": "YYYY-MM-DD",
+    "alternate_names": "VisitDt|DateOfVisit",
+    "priority": "Required-or-derivable",
+    "metadata_": {
+      "format": "ISO-8601",
+      "anchor": true,
+      "transform_rule": "if absent, derive from VisitBaselineDate + YearsFromEnrollment * 365.25"
+    },
+    "source_authority": "LOINC",
+    "source_code": "11778-8",
+    "source_version": "LOINC-2.78",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "VisitNumber",
+    "description": "Sequential visit identifier within the study; 0 = baseline/screening visit.",
+    "collection": "RoP-Core-Time",
+    "item_type": "numeric",
+    "values": "0..200",
+    "alternate_names": "VisitNum|VisitSeq|VisitIndex",
+    "priority": "Required-or-derivable",
+    "metadata_": {
+      "anchor": true,
+      "baseline_value": 0,
+      "increment": 1,
+      "transform_rule": "rank-order by VisitDate within SubjectID; 0-indexed"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated",
+    "unit_of_measure": "1",
+    "unit_vocabulary": "UCUM",
+    "plausible_min": 0,
+    "plausible_max": 1000
+  },
+  {
+    "item": "YearsFromEnrollment",
+    "description": "Time elapsed between this visit and VisitBaselineDate, expressed as a float in years. Supports fractional values (0.25 = ~3 months).",
+    "collection": "RoP-Core-Time",
+    "item_type": "numeric",
+    "values": "0.0..50.0",
+    "alternate_names": "YearsFromBaseline|TimeSinceEnrollment|FollowUpYears",
+    "priority": "Required-or-derivable",
+    "metadata_": {
+      "unit": "years",
+      "precision": 2,
+      "anchor": true,
+      "transform_rule": "(VisitDate - VisitBaselineDate) / 365.25"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated",
+    "unit_of_measure": "a",
+    "unit_vocabulary": "UCUM",
+    "plausible_min": -5,
+    "plausible_max": 100
+  },
+  {
+    "item": "AgeAtVisit",
+    "description": "Participant age in integer years at the time of the visit. Censored to 90+ when HIPAA Safe Harbor applies.",
+    "collection": "RoP-Core-Time",
+    "item_type": "numeric",
+    "values": "0..120",
+    "alternate_names": "Age|AgeYears",
+    "priority": "Required",
+    "metadata_": {
+      "unit": "years",
+      "precision": 0,
+      "censoring_rule": "values >= 90 reported as '90+' when DOB is HIPAA-restricted"
+    },
+    "source_authority": "LOINC",
+    "source_code": "30525-0",
+    "source_version": "LOINC-2.78",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated",
+    "unit_of_measure": "a",
+    "unit_vocabulary": "UCUM",
+    "plausible_min": 0,
+    "plausible_max": 120
+  },
+  {
+    "item": "YearsSinceDiagnosis",
+    "description": "Time in years between the participant's clinical diagnosis date and the current visit. Negative values permitted for pre-diagnostic visits in prodromal cohorts.",
+    "collection": "RoP-Core-Time",
+    "item_type": "numeric",
+    "values": "-50.0..80.0",
+    "alternate_names": "DiseaseDuration|TimeSinceDx",
+    "priority": "Optional",
+    "metadata_": {
+      "unit": "years",
+      "precision": 1,
+      "allows_prodromal_negative": true
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated",
+    "unit_of_measure": "a",
+    "unit_vocabulary": "UCUM",
+    "plausible_min": -100,
+    "plausible_max": 100
+  },
+  {
+    "item": "YearsSinceSymptomOnset",
+    "description": "Time in years between participant-reported (or clinician-determined) first symptom onset and the current visit.",
+    "collection": "RoP-Core-Time",
+    "item_type": "numeric",
+    "values": "0.0..80.0",
+    "alternate_names": "SymptomDuration|YearsSinceOnset",
+    "priority": "Optional",
+    "metadata_": {
+      "unit": "years",
+      "precision": 1,
+      "notes": "Onset date estimation method should be captured separately"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated",
+    "unit_of_measure": "a",
+    "unit_vocabulary": "UCUM",
+    "plausible_min": -100,
+    "plausible_max": 100
+  }
+]

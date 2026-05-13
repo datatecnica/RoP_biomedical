@@ -1,0 +1,350 @@
+[
+  {
+    "item": "CollectionID",
+    "description": "Stable RoP-internal identifier for a curated CDE collection. Format: 'RoP-Collection:NNNNNNN'. A collection is a project-specific, curator-blessed bundle of CDEs drawn from one or more upstream source authorities, plus DataTecnica-derived additions where standard authorities don't cover the project's needs. Examples: Path-ND, GP2-CDE, CARD-Catalog-CDE, Gates-Ventures-CDE, ADSP-PHC-CDE. Each version of a collection is a distinct CollectionID.",
+    "collection": "RoP-Core-Collections",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "CollectionAccession",
+    "priority": "Required-for-collection-record",
+    "metadata_": {
+      "format": "RoP-Collection:NNNNNNN",
+      "stability": "never recycled; deprecated collections retain ID with is_active=false"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "CollectionName",
+    "description": "Full human-readable collection name. Examples: 'Path-ND Common Data Elements', 'GP2 Phenotypic Data Standards', 'CARD Catalog Curated Resources', 'Gates Ventures Neurodegeneration CDE Pack', 'ADSP-PHC Harmonized Phenotype Set'.",
+    "collection": "RoP-Core-Collections",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "Name|FullName",
+    "priority": "Required-for-collection-record",
+    "metadata_": {
+      "max_length": 256
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "CollectionAbbreviation",
+    "description": "Short identifier used as the value in `member_of_collections` arrays on individual CDE rows. Examples: Path-ND, GP2, CARD, GatesV, ADSP-PHC. This is the join key \u2014 every CDE row tagged `member_of_collections=['Path-ND']` resolves through this abbreviation.",
+    "collection": "RoP-Core-Collections",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "Abbreviation|Tag",
+    "priority": "Required-for-collection-record",
+    "metadata_": {
+      "max_length": 64,
+      "must_be_unique_within_active_collections": true
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "CollectionVersion",
+    "description": "Version identifier following semantic versioning where applicable. Collections evolve as new CDEs are added, deprecated CDEs are retired, and value-set memberships shift. Pin to a specific version when citing a collection in published methods.",
+    "collection": "RoP-Core-Collections",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "Version",
+    "priority": "Required-for-collection-record",
+    "metadata_": {
+      "format": "semantic version preferred (e.g., '1.0.0', '2.3.1') or date-based (e.g., '2026-04')",
+      "max_length": 32
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "CollectionDescription",
+    "description": "Free-text description of the collection's purpose, scope, and intended use. One paragraph recommended.",
+    "collection": "RoP-Core-Collections",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "Description|Purpose",
+    "priority": "Required-for-collection-record",
+    "metadata_": {
+      "max_length": 4096
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "CollectionOwner",
+    "description": "Organization that owns and maintains the collection. JSON object with name, identifier (ROR or DUNS), contact, and governance URL. Examples: NIH CARD, GP2 Steering Committee, DataTecnica LLC, Gates Ventures.",
+    "collection": "RoP-Core-Collections",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "Owner|MaintainingOrganization",
+    "priority": "Required-for-collection-record",
+    "metadata_": {
+      "format": "JSON object",
+      "schema": {
+        "name": "Organization name",
+        "identifier": "ROR or DUNS identifier",
+        "contact_email": "maintainer contact",
+        "governance_url": "URL to collection governance documentation"
+      }
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "CollectionCurators",
+    "description": "Curators responsible for the collection. JSON array of {name, orcid, affiliation, role} entries. Role distinguishes lead-curator, contributing-curator, technical-reviewer, scientific-reviewer.",
+    "collection": "RoP-Core-Collections",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "Curators|Maintainers",
+    "priority": "Required-for-collection-record",
+    "metadata_": {
+      "format": "JSON array of curator entries"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "CollectionScope",
+    "description": "What the collection covers. JSON object with disease areas, modalities covered, target cohorts, and explicit out-of-scope items. Helps downstream consumers decide whether the collection is appropriate for their use case.",
+    "collection": "RoP-Core-Collections",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "Scope",
+    "priority": "Required-for-collection-record",
+    "metadata_": {
+      "format": "JSON object",
+      "schema": {
+        "disease_areas": "JSON array of Mondo/HPO disease codes (e.g., ['Mondo:0005180', 'Mondo:0007089'])",
+        "modalities": "JSON array of modality tags from Module 12 ResourceCoarseModality vocabulary",
+        "target_cohorts": "JSON array of cohort/resource names this collection is designed for",
+        "out_of_scope": "Free-text description of what the collection deliberately does not cover"
+      }
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "CollectionSourceAuthorities",
+    "description": "Upstream source authorities that contribute CDEs to this collection. Most curated collections draw from multiple authorities (Path-ND uses NACC, NINDS-CDE, LOINC, HPO, plus DataTecnica-derived rows for gaps). JSON array of source authority names.",
+    "collection": "RoP-Core-Collections",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "SourceAuthorities|UpstreamSources",
+    "priority": "Required-for-collection-record",
+    "metadata_": {
+      "format": "JSON array",
+      "valid_authorities": [
+        "LOINC",
+        "HPO",
+        "OMIM",
+        "Mondo",
+        "OMOP",
+        "NACC",
+        "NINDS-CDE",
+        "PhenX",
+        "CDISC",
+        "DUO",
+        "DataTecnica-derived"
+      ],
+      "rationale": "Tracks provenance at the collection level so downstream consumers know what licensing and update cycles apply. A collection drawing from NACC (DUA-restricted) and LOINC (open) inherits the more restrictive of the two for any compound use."
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "CollectionParentCollections",
+    "description": "When this collection is derived from or extends another collection, the parent CollectionID values. JSON array. Example: Path-ND-Genetic-Subset is derived from Path-ND. Enables provenance traversal and avoids duplicating shared content.",
+    "collection": "RoP-Core-Collections",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "ParentCollections|DerivedFrom",
+    "priority": "Required-when-derived-collection",
+    "metadata_": {
+      "format": "JSON array of CollectionID strings"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "CollectionEquivalentCollections",
+    "description": "Other collections that cover similar scope but are independently curated. Examples: Path-ND \u2248 NACC UDS-3.0 in cognitive coverage; GP2-CDE \u2248 MJFF-PD-CDE in PD-specific coverage. JSON array of {collection_id, overlap_estimate, scope_diff_summary}. Supports cross-collection harmonization decisions.",
+    "collection": "RoP-Core-Collections",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "EquivalentCollections|SimilarCollections",
+    "priority": "Optional",
+    "metadata_": {
+      "format": "JSON array",
+      "schema_per_entry": {
+        "collection_id": "Other CollectionID",
+        "overlap_estimate": "Approximate fraction of CDEs in common (0.0-1.0)",
+        "scope_diff_summary": "Brief description of differences"
+      }
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "CollectionGovernanceClass",
+    "description": "Collection-level governance summary. JSON object with default consent class (Module 9 DUO terms), default sharing posture, and DUA reference. Most CDEs in a collection inherit these defaults; per-CDE overrides go in Module 9.",
+    "collection": "RoP-Core-Collections",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "Governance|GovernanceProfile",
+    "priority": "Required-for-collection-record",
+    "metadata_": {
+      "format": "JSON object",
+      "schema": {
+        "default_duo_class": "GRU | HMB | DS | POA | GSO | NPU | NRES | Mixed | Unknown",
+        "default_reshare_permitted": "permitted | permitted-with-DAC-approval | prohibited | unknown",
+        "default_download_permitted": "permitted | permitted-with-DAC-approval | summary-statistics-only | model-weights-only | prohibited | unknown",
+        "dua_reference": "DOI or URL of governing DUA",
+        "license": "SPDX identifier or descriptive license name"
+      }
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "CollectionFAIRScore",
+    "description": "0-9 FAIR score for the collection itself (carries CARD methodology to the collection level). Distinct from per-resource FAIR scores in Module 12 \u2014 a collection of FAIR-compliant resources can still score poorly on its own meta-FAIR if the collection lacks versioning, persistent identifiers, or documentation.",
+    "collection": "RoP-Core-Collections",
+    "item_type": "numeric",
+    "values": null,
+    "alternate_names": "FAIRScore",
+    "priority": "Recommended-for-collection-record",
+    "metadata_": {
+      "scale": "0-9"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated",
+    "unit_of_measure": "1",
+    "unit_vocabulary": "UCUM",
+    "plausible_min": 0,
+    "plausible_max": 9
+  },
+  {
+    "item": "CollectionMemberCount",
+    "description": "Snapshot of how many CDE rows belong to this collection. JSON object {total, by_module, by_source_authority, snapshot_date}. Enables size-based prioritization in the UI and tracks growth over time. Computed at bundle build time, not maintained by hand.",
+    "collection": "RoP-Core-Collections",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "MemberCount|RowCount",
+    "priority": "Recommended-for-collection-record",
+    "metadata_": {
+      "format": "JSON object",
+      "computed_at": "bundle build time",
+      "schema": {
+        "total": "integer total CDE count",
+        "by_module": "{module_id: count} breakdown",
+        "by_source_authority": "{authority: count} breakdown",
+        "snapshot_date": "ISO date the count was computed"
+      }
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "CollectionLinkedResources",
+    "description": "Module 12 ResourceID values that produce or consume this collection's CDEs. A collection like Path-ND links to its source resources (NACC, GP2, PPMI, ADSP-PHC). JSON array.",
+    "collection": "RoP-Core-Collections",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "LinkedResources",
+    "priority": "Recommended-for-collection-record",
+    "metadata_": {
+      "format": "JSON array of ResourceID strings"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "CollectionPromotionStatus",
+    "description": "Tracks the upstream-submission lifecycle for DataTecnica-derived CDEs in this collection. Many boutique CDEs fill gaps that standard authorities don't cover; the long-term goal is to submit those gaps upstream (to LOINC, HPO, etc.) for permanent inclusion. This field tracks where each candidate is in that pipeline.",
+    "collection": "RoP-Core-Collections",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "UpstreamPromotionStatus",
+    "priority": "Optional",
+    "metadata_": {
+      "format": "JSON object with per-target-authority counts",
+      "schema": {
+        "submitted_to_LOINC": "integer count submitted",
+        "accepted_into_LOINC": "integer count accepted",
+        "submitted_to_HPO": "integer count submitted",
+        "accepted_into_HPO": "integer count accepted",
+        "as_of_date": "ISO date of snapshot"
+      },
+      "rationale": "Promotion to upstream authorities is the right end-state for genuinely novel CDEs \u2014 once accepted, the boutique row is deprecated and the upstream row becomes canonical. Tracking promotion status quantifies DataTecnica's contribution to public CDE infrastructure."
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  }
+]

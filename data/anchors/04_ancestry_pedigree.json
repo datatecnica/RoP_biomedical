@@ -1,0 +1,333 @@
+[
+  {
+    "item": "RaceSelfReported",
+    "description": "Self-reported race, OMB categories. Multi-select permitted; separator '|'.",
+    "collection": "RoP-Core-AncestryPedigree",
+    "item_type": "enum",
+    "values": "White|BlackOrAfricanAmerican|Asian|AmericanIndianOrAlaskaNative|NativeHawaiianOrPacificIslander|MoreThanOneRace|OtherRace|Unknown|Declined",
+    "alternate_names": "Race|SelfReportedRace",
+    "priority": "Required",
+    "metadata_": {
+      "multi_select": true,
+      "separator": "|",
+      "standard": "OMB-1997"
+    },
+    "source_authority": "LOINC",
+    "source_code": "72826-1",
+    "source_version": "LOINC-2.78",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "EthnicitySelfReported",
+    "description": "Self-reported ethnicity, OMB binary classification.",
+    "collection": "RoP-Core-AncestryPedigree",
+    "item_type": "enum",
+    "values": "HispanicOrLatino|NotHispanicOrLatino|Unknown|Declined",
+    "alternate_names": "Ethnicity|HispanicEthnicity",
+    "priority": "Required",
+    "metadata_": {
+      "standard": "OMB-1997"
+    },
+    "source_authority": "LOINC",
+    "source_code": "69490-1",
+    "source_version": "LOINC-2.78",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "AncestrySelfReported",
+    "description": "Self-reported ancestry at finer granularity than OMB race (country of origin, ethnic group, etc.).",
+    "collection": "RoP-Core-AncestryPedigree",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "EthnicOrigin|CulturalAncestry",
+    "priority": "Optional",
+    "metadata_": {
+      "free_text": true,
+      "controlled_vocabulary_optional": "ISO-3166 country codes"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "AncestryGeneticSuperpop",
+    "description": "Computational genetic ancestry estimate at the 1000 Genomes superpopulation level.",
+    "collection": "RoP-Core-AncestryPedigree",
+    "item_type": "enum",
+    "values": "AFR|AMR|EAS|EUR|SAS|OCE|ADMIXED|Unknown",
+    "alternate_names": "GeneticAncestry|1KGSuperpop",
+    "priority": "Required-for-genetic-cohorts",
+    "metadata_": {
+      "reference_standard": "1000-Genomes-Phase3",
+      "companion_fields": [
+        "AncestryGeneticMethod",
+        "AncestryGeneticReferencePanel"
+      ]
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "AncestryGeneticSubpop",
+    "description": "Computational genetic ancestry estimate at finer-grained subpopulation level. Default vocabulary: GP2 11-class taxonomy.",
+    "collection": "RoP-Core-AncestryPedigree",
+    "item_type": "enum",
+    "values": "AAC|AFR|AJ|AMR|CAH|CAS|EAS|EUR|FIN|MDE|SAS|ADMIXED|Unknown",
+    "alternate_names": "GP2Ancestry|FineGrainedAncestry",
+    "priority": "Optional",
+    "metadata_": {
+      "reference_standard": "GP2-2024-11class",
+      "expansion_notes": "AAC=African Admixed/Caribbean; AJ=Ashkenazi Jewish; CAH=Complex Admixed Hispanic; CAS=Central Asian; FIN=Finnish; MDE=Middle Eastern"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "AncestryGeneticMethod",
+    "description": "Method used to estimate genetic ancestry. Required when any AncestryGenetic* field is populated.",
+    "collection": "RoP-Core-AncestryPedigree",
+    "item_type": "enum",
+    "values": "PCA-projection|ADMIXTURE|RFMix|GLOBETrotter|IBD-segment|Other",
+    "alternate_names": "AncestryMethod",
+    "priority": "Required-when-genetic-ancestry-present",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "AncestryGeneticReferencePanel",
+    "description": "Reference panel used as the basis for genetic ancestry estimation. Required when any AncestryGenetic* field is populated.",
+    "collection": "RoP-Core-AncestryPedigree",
+    "item_type": "enum",
+    "values": "1KG-phase3|TOPMed-Bravo|HGDP|gnomAD-v3|GP2-internal|Other",
+    "alternate_names": "AncestryReferencePanel|RefPanel",
+    "priority": "Required-when-genetic-ancestry-present",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "FamilyID",
+    "description": "Globally unique identifier for the family/pedigree this individual belongs to. All individuals sharing a FamilyID are members of the same pedigree; individuals with no family enrollment have FamilyID equal to IndividualID (singleton family). Stable across the lifetime of the cohort. PLINK FAM file Column 1 maps directly to this field.",
+    "collection": "RoP-Core-AncestryPedigree",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "PedigreeID|FAMID",
+    "priority": "Required-when-pedigree-present",
+    "metadata_": {
+      "plink_fam_column": 1,
+      "singleton_convention": "set FamilyID = IndividualID for individuals not enrolled with relatives",
+      "must_be_unique_within_cohort": true,
+      "rationale": "Family-based association tests, linkage analyses, transmission disequilibrium tests, and variance-component models all require explicit family grouping. Without a stable FamilyID, every analysis tool reinvents the family-detection wheel from related-pair lists."
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "PaternalIndividualID",
+    "description": "IndividualID of this individual's biological father, when known and present in the cohort. Null/missing when father is unknown or not enrolled. PLINK convention uses '0' for unknown; RoP uses null with a populated PaternalKnown flag instead, distinguishing 'father unknown' from 'father known but not in cohort'.",
+    "collection": "RoP-Core-AncestryPedigree",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "FatherID|PaternalID",
+    "priority": "Required-when-pedigree-present",
+    "metadata_": {
+      "plink_fam_column": 3,
+      "fk_to": "IndividualID",
+      "null_meaning": "father not enrolled in cohort or unknown; see PaternalKnown for disambiguation"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "MaternalIndividualID",
+    "description": "IndividualID of this individual's biological mother, when known and present in the cohort. Same null/known semantics as PaternalIndividualID.",
+    "collection": "RoP-Core-AncestryPedigree",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "MotherID|MaternalID",
+    "priority": "Required-when-pedigree-present",
+    "metadata_": {
+      "plink_fam_column": 4,
+      "fk_to": "IndividualID"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "PaternalKnown",
+    "description": "Whether biological paternity information is known. True when paternity is established; false when paternity is unknown; 'in-cohort' when known and the father is also enrolled (PaternalIndividualID populated); 'out-of-cohort' when known but father is not enrolled. Disambiguates the common cause of null PaternalIndividualID values.",
+    "collection": "RoP-Core-AncestryPedigree",
+    "item_type": "enum",
+    "values": "in-cohort|out-of-cohort|unknown|adopted|donor-conceived",
+    "alternate_names": "FatherKnownStatus",
+    "priority": "Recommended-when-pedigree-present",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "MaternalKnown",
+    "description": "Whether biological maternity information is known. Same semantics as PaternalKnown.",
+    "collection": "RoP-Core-AncestryPedigree",
+    "item_type": "enum",
+    "values": "in-cohort|out-of-cohort|unknown|adopted|donor-conceived",
+    "alternate_names": "MotherKnownStatus",
+    "priority": "Recommended-when-pedigree-present",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "FounderStatus",
+    "description": "Whether this individual is a founder of the pedigree (no parents in the dataset). Founders contribute genetic material that is not derived from other dataset members. Required for variance-component models, IBD inference, and many family-based association methods. Computed automatically when PaternalIndividualID and MaternalIndividualID are known but recorded explicitly to avoid recomputation by every downstream tool.",
+    "collection": "RoP-Core-AncestryPedigree",
+    "item_type": "enum",
+    "values": "founder|non-founder|unknown",
+    "alternate_names": "IsFounder",
+    "priority": "Recommended-when-pedigree-present",
+    "metadata_": {
+      "computation_rule": "founder if both PaternalIndividualID and MaternalIndividualID are null or out-of-cohort; non-founder if at least one parent is in-cohort"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "MonozygoticTwinGroup",
+    "description": "Identifier for monozygotic (identical) twin or higher-order MZ multiple grouping. All MZ multiples sharing this identifier are genetically identical and should be treated as a single genetic unit for IBD-based and variance-component analyses while remaining distinct for environmental and longitudinal analyses. Null for non-twins and dizygotic twins.",
+    "collection": "RoP-Core-AncestryPedigree",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "MZTwinID|IdenticalTwinGroup",
+    "priority": "Required-when-MZ-twins-present",
+    "metadata_": {
+      "must_share_within_group": [
+        "FamilyID",
+        "PaternalIndividualID",
+        "MaternalIndividualID",
+        "SexChromosomal"
+      ],
+      "rationale": "MZ twins share 100% of genome IBD; treating them as independent observations inflates effective sample size and biases standard error estimates."
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "DizygoticTwinGroup",
+    "description": "Identifier for dizygotic (fraternal) twin or higher-order DZ multiple grouping. DZ multiples share an average of 50% of genome IBD (like full siblings) but were gestated together and share environmental exposures distinguishing them from non-twin siblings.",
+    "collection": "RoP-Core-AncestryPedigree",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "DZTwinID|FraternalTwinGroup",
+    "priority": "Recommended-when-DZ-twins-present",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "RelationshipToProband",
+    "description": "Relationship of this individual to the family proband (the individual who brought the family to clinical or research attention). Free-text encoding of standard kinship terms with structured form. The proband themselves carries the value 'proband'. Particularly important for ascertainment-aware analyses.",
+    "collection": "RoP-Core-AncestryPedigree",
+    "item_type": "enum",
+    "values": "proband|mother|father|sister|brother|maternal-grandmother|maternal-grandfather|paternal-grandmother|paternal-grandfather|maternal-aunt|maternal-uncle|paternal-aunt|paternal-uncle|niece|nephew|first-cousin|second-cousin|child|spouse|other|unknown",
+    "alternate_names": "ProbandRelationship",
+    "priority": "Recommended-when-pedigree-present",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "PedigreeFileURI",
+    "description": "Reference to the canonical pedigree file representation when one exists. Format: PLINK FAM (.fam), GEDCOM (.ged), CSV with documented columns, or PED format. Allows downstream tools that prefer file-based pedigree input to retrieve the authoritative version rather than reconstructing from per-row anchors. Same URI scheme rules as Tier 8 DataAssetURI (DRS preferred).",
+    "collection": "RoP-Core-AncestryPedigree",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "PedigreeFileLocation|FAMFileURI",
+    "priority": "Recommended-when-pedigree-present",
+    "metadata_": {
+      "supported_formats": [
+        "PLINK-FAM",
+        "PED",
+        "GEDCOM",
+        "CSV"
+      ],
+      "max_length": 2048
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ConsanguinityFlag",
+    "description": "Whether the individual is the product of a consanguineous union, when known. Affects expected runs-of-homozygosity and inflates the chance of recessive disease. Particularly relevant for population-specific cohorts (e.g., GP2 South Asian, MENA studies) where consanguinity rates are non-negligible.",
+    "collection": "RoP-Core-AncestryPedigree",
+    "item_type": "enum",
+    "values": "consanguineous|non-consanguineous|unknown",
+    "alternate_names": "Consanguinity",
+    "priority": "Optional",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  }
+]

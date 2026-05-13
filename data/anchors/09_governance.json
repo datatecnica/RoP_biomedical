@@ -1,0 +1,560 @@
+[
+  {
+    "item": "ConsentDUOPrimary",
+    "description": "Primary Data Use Ontology (DUO) consent class. The fundamental scope of permitted research use granted by the participant under the consent form they signed. RoP uses GA4GH's Data Use Ontology as the authoritative vocabulary for consent classes. Restrictions and modifiers (non-commercial, IRB-required, time-limited, etc.) are recorded separately in ConsentDUORestrictions.",
+    "collection": "RoP-Core-Governance",
+    "item_type": "enum",
+    "values": "GRU|HMB|DS|POA|GSO|NPU|NRES|Mixed|Unknown",
+    "alternate_names": "ConsentClass|ConsentScope|DUOClass",
+    "priority": "Required",
+    "metadata_": {
+      "value_definitions": {
+        "GRU": "General Research Use (DUO:0000004) \u2014 no specific research scope restriction",
+        "HMB": "Health/Medical/Biomedical research (DUO:0000006) \u2014 limited to health-related research",
+        "DS": "Disease Specific (DUO:0000007) \u2014 limited to research on a specified disease (record disease in ConsentDUODiseaseSpecific)",
+        "POA": "Population, Origins, or Ancestry research only (DUO:0000011)",
+        "GSO": "Genetic Studies Only (DUO:0000042)",
+        "NPU": "Not for Profit Use only (DUO:0000018)",
+        "NRES": "No Research \u2014 clinical use only, not for research",
+        "Mixed": "Heterogeneous consent within the cohort; per-individual class recorded at row level",
+        "Unknown": "Consent class has not been determined or recorded"
+      },
+      "authority": "GA4GH Data Use Ontology (DUO)",
+      "duo_url": "https://github.com/EBISPOT/DUO"
+    },
+    "source_authority": "DUO",
+    "source_version": "DUO-2026-02",
+    "source_url": "https://github.com/EBISPOT/DUO",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ConsentDUOCode",
+    "description": "Full DUO permission term URI, including the primary class. Format: 'DUO:NNNNNNN'. Example: 'DUO:0000004' for General Research Use. Provides direct linkage to the DUO ontology release.",
+    "collection": "RoP-Core-Governance",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "DUOCode|DUOTerm",
+    "priority": "Required",
+    "metadata_": {
+      "format": "DUO:NNNNNNN",
+      "regex": "^DUO:[0-9]{7}$"
+    },
+    "source_authority": "DUO",
+    "source_version": "DUO-2026-02",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ConsentDUORestrictions",
+    "description": "Array of additional DUO restriction modifiers applied to the primary class. Each entry is a DUO modifier code with optional structured parameters. Examples: NCU (non-commercial use only), MOR (publication moratorium with end_date), GS (geographical restriction with allowed_jurisdictions), TS (time limit with expiry_date), IRB (ethics approval required), COL (collaboration required), PUB (publication required), US (user-specific restriction), IS (institution-specific), PS (project-specific).",
+    "collection": "RoP-Core-Governance",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "DUOModifiers|ConsentRestrictions",
+    "priority": "Recommended",
+    "metadata_": {
+      "format": "JSON array",
+      "schema_per_entry": {
+        "modifier_code": "DUO modifier abbreviation (NCU, MOR, GS, TS, IRB, COL, PUB, US, IS, PS, ...)",
+        "duo_code": "DUO:NNNNNNN of the modifier",
+        "parameters": "modifier-specific structured parameters (e.g., expiry_date for TS, allowed_jurisdictions for GS, allowed_institution for IS)"
+      }
+    },
+    "source_authority": "DUO",
+    "source_version": "DUO-2026-02",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ConsentDUODiseaseSpecific",
+    "description": "When ConsentDUOPrimary is 'DS' (Disease Specific), the disease(s) to which research use is restricted. Mondo or HPO codes preferred; free text accepted with the corresponding code where derivable.",
+    "collection": "RoP-Core-Governance",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "DiseaseSpecificScope|DSDisease",
+    "priority": "Required-when-ConsentDUOPrimary-DS",
+    "metadata_": {
+      "format": "Mondo:NNNNNNN | HPO:NNNNNNN | free text with controlled-vocab companion field",
+      "preferred_vocabularies": [
+        "Mondo",
+        "HPO",
+        "OMIM"
+      ]
+    },
+    "source_authority": "Mondo",
+    "source_version": "Mondo-2026-04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ConsentVersion",
+    "description": "Version identifier of the consent form the participant signed. Critical for re-consent governance: when an institution updates its consent form, prior participants are governed by the version they signed unless re-consented.",
+    "collection": "RoP-Core-Governance",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "ConsentFormVersion",
+    "priority": "Required",
+    "metadata_": {
+      "max_length": 64,
+      "examples": [
+        "UDS-3.0-consent-v2.1",
+        "PPMI-protocol-amendment-7"
+      ]
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ConsentDateGiven",
+    "description": "Calendar date the most recent applicable consent was given. For re-consented participants, this reflects the most recent consent event; the chain of consent dates is queryable through the audit trail.",
+    "collection": "RoP-Core-Governance",
+    "item_type": "date",
+    "values": null,
+    "alternate_names": "ConsentDate",
+    "priority": "Required",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ReconsentPermitted",
+    "description": "Whether the IRB approval and original participant agreement permit seeking re-consent for new research uses beyond the original scope. False values commonly arise for participants who have died or withdrawn, or for cohorts whose IRB protocol prohibits re-contact.",
+    "collection": "RoP-Core-Governance",
+    "item_type": "binary",
+    "values": "true|false|unknown",
+    "alternate_names": "ReconsentAllowed",
+    "priority": "Required",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ReconsentRequired",
+    "description": "Whether re-consent must be obtained from the participant before any new research use that exceeds the scope of their original consent. When true, downstream users must initiate the re-consent workflow before initiating analysis. Distinct from ReconsentPermitted: a row may have ReconsentRequired=true and ReconsentPermitted=false (re-consent is required but cannot be obtained, blocking the new use).",
+    "collection": "RoP-Core-Governance",
+    "item_type": "binary",
+    "values": "true|false|conditional|unknown",
+    "alternate_names": "ReconsentNeeded",
+    "priority": "Required",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ReconsentDate",
+    "description": "Date of the most recent re-consent event, if any. Null when the participant has never been re-consented.",
+    "collection": "RoP-Core-Governance",
+    "item_type": "date",
+    "values": null,
+    "alternate_names": "LastReconsentDate",
+    "priority": "Recommended-when-ReconsentRequired-true",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ParticipantRecontactPermitted",
+    "description": "Whether the participant may be re-contacted by the originating cohort or its delegates. Independent of ReconsentPermitted: re-contact may be permitted for return-of-results and updates without permission to seek re-consent for new research uses, or vice versa.",
+    "collection": "RoP-Core-Governance",
+    "item_type": "binary",
+    "values": "true|false|unknown",
+    "alternate_names": "RecontactAllowed",
+    "priority": "Required",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ParticipantRecontactPurposes",
+    "description": "Allowed purposes for re-contacting the participant, as a set. Common values: 'return-of-results', 'incidental-findings', 'new-research-recruitment', 'follow-up-survey', 'sample-recollection'.",
+    "collection": "RoP-Core-Governance",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "RecontactPurposes",
+    "priority": "Recommended-when-ParticipantRecontactPermitted-true",
+    "metadata_": {
+      "format": "pipe-delimited or JSON array",
+      "common_values": [
+        "return-of-results",
+        "incidental-findings",
+        "new-research-recruitment",
+        "follow-up-survey",
+        "sample-recollection",
+        "longitudinal-follow-up"
+      ]
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "PIRecontactPermitted",
+    "description": "Whether the originating Principal Investigator may be re-contacted by downstream data users for clarification, additional data requests, or collaboration inquiries. Most academic data sharing assumes PI re-contact is permitted; explicit recording prevents the common case of PI contact information being lost when datasets move through repositories.",
+    "collection": "RoP-Core-Governance",
+    "item_type": "binary",
+    "values": "true|false|unknown",
+    "alternate_names": "OriginatorRecontactAllowed",
+    "priority": "Required",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ResharePermitted",
+    "description": "Whether the data may be re-shared by the recipient with parties beyond the original recipient. False is the default for data flowing under restrictive DUAs; true is common for openly licensed datasets. Re-share governance applies to the data itself, not to derivative summary statistics or model weights. Distinct from DownloadOutsideEnclavePermitted: a recipient with download permission may still be prohibited from re-sharing.",
+    "collection": "RoP-Core-Governance",
+    "item_type": "enum",
+    "values": "permitted|permitted-with-DAC-approval|prohibited|unknown",
+    "alternate_names": "RedistributionAllowed",
+    "priority": "Required",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "DownloadOutsideEnclavePermitted",
+    "description": "Whether data may be downloaded or exported from the controlled enclave/repository to user-controlled storage. Functionally distinct from both CloudComputePermitted (which governs where computation can occur) and ResharePermitted (which governs onward distribution). Many secure repositories permit cloud compute within their enclave but prohibit any download \u2014 All of Us, UK Biobank's RAP, and NIAGADS DSS all follow this pattern. Determines whether published findings carry data, summary statistics only, or trained model weights.",
+    "collection": "RoP-Core-Governance",
+    "item_type": "enum",
+    "values": "permitted|permitted-with-DAC-approval|summary-statistics-only|model-weights-only|prohibited|unknown",
+    "alternate_names": "ExportPermitted|EnclaveExitPermitted",
+    "priority": "Required",
+    "metadata_": {
+      "value_definitions": {
+        "permitted": "Data may be downloaded to recipient-controlled infrastructure",
+        "permitted-with-DAC-approval": "Download requires per-request DAC approval, often for specific subsets",
+        "summary-statistics-only": "Only aggregate summary statistics may leave the enclave; row-level data must remain inside",
+        "model-weights-only": "Trained model weights may be exported but not the data they were trained on",
+        "prohibited": "All compute and storage must remain within the named enclave; no exfiltration permitted",
+        "unknown": "Download policy has not been determined or recorded"
+      },
+      "rationale": "Modern biomedical data sharing increasingly distinguishes 'compute on the data' from 'take the data with you'. Without a dedicated field, this distinction collapses into ambiguity around CloudComputePermitted or ResharePermitted, and downstream pipelines cannot enforce the intended governance."
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "EnclaveEnvironment",
+    "description": "When DownloadOutsideEnclavePermitted is anything other than 'permitted', the named enclave or secure analysis environment where the data must remain. Identifies the specific operational system that enforces the enclave boundary. Examples: 'AllOfUs Researcher Workbench', 'UK Biobank Research Analysis Platform (RAP)', 'NIH STRIDES Initiative', 'DNAnexus', 'Terra by Verily', 'NIAGADS DSS', 'AnVIL', 'BioData Catalyst'.",
+    "collection": "RoP-Core-Governance",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "SecureEnvironment|AnalysisEnclave",
+    "priority": "Required-when-DownloadOutsideEnclavePermitted-prohibited",
+    "metadata_": {
+      "max_length": 256,
+      "format": "free text; canonical enclave name preferred when one exists"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "MinimumSummaryCellSize",
+    "description": "Statistical disclosure control threshold: the minimum cell size below which any published summary statistic, frequency table, or aggregate must be suppressed. When set to N, no published bin/cell may contain fewer than N participants. Counts of zero are reported as zero (not suppressed). Complementary cells must be suppressed if their suppression would allow inference of a small cell \u2014 this is captured in SmallCellSuppressionRule. Common values: 5 (UK Biobank, common minimum), 10 (NIH dbGaP, NACC), 11 (CMS), 20 (All of Us, gnomAD).",
+    "collection": "RoP-Core-Governance",
+    "item_type": "numeric",
+    "values": null,
+    "alternate_names": "MinCellSize|kAnonymityThreshold|SmallCellThreshold",
+    "priority": "Required",
+    "metadata_": {
+      "format": "positive integer",
+      "common_values": [
+        5,
+        10,
+        11,
+        20
+      ],
+      "rationale": "Without enforced minimum cell sizes, individual participants can be re-identified through cross-tabulation of demographic strata. The threshold operationalizes statistical disclosure control and is the single most-cited governance parameter in dataset publication policies.",
+      "validation": "values < 1 are invalid; values > 100 are unusual and should trigger review"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated",
+    "unit_of_measure": "1",
+    "unit_vocabulary": "UCUM",
+    "plausible_min": 0,
+    "plausible_max": 1000
+  },
+  {
+    "item": "SmallCellSuppressionRule",
+    "description": "Description of the small-cell suppression rule including complementary suppression requirements when applicable. Captures the logic beyond the simple threshold: complementary cell suppression (when one cell in a row/column is suppressed, the next-smallest must also be suppressed to prevent back-inference); rounding rules (round to nearest 5, nearest 10); zero-count treatment (suppress vs. report); and any rule asymmetries by stratum. Free text, but should be precise enough that an analyst can implement it correctly without consulting the original DUA.",
+    "collection": "RoP-Core-Governance",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "SuppressionRule|DisclosureControlRule",
+    "priority": "Recommended-when-MinimumSummaryCellSize-present",
+    "metadata_": {
+      "max_length": 1024,
+      "example": "Cells with N<20 suppressed; if any cell in a row or column is suppressed, the next-smallest cell in that row/column must also be suppressed (complementary suppression). Counts of zero reported as zero, not suppressed. Rule applies independently to each stratification level."
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "CloudComputePermitted",
+    "description": "Whether the data may be processed in cloud compute environments. Distinguishes commercial cloud, government/regulated cloud (NIH STRIDES, AWS GovCloud, Azure Government, FedRAMP-High), and on-premises only.",
+    "collection": "RoP-Core-Governance",
+    "item_type": "enum",
+    "values": "any-cloud|government-cloud-only|specific-cloud-only|on-premises-only|unknown",
+    "alternate_names": "CloudPermitted",
+    "priority": "Required",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "CloudComputeRestrictions",
+    "description": "When CloudComputePermitted is 'specific-cloud-only' or 'government-cloud-only', the specific cloud environments approved for use. Examples: 'NIH STRIDES on AWS', 'AWS GovCloud (US)', 'Azure Government - HHS', 'GCP Assured Workloads'. When CloudComputePermitted is 'any-cloud', this field may carry positive restrictions (e.g., 'no providers based in countries under sanctions').",
+    "collection": "RoP-Core-Governance",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "CloudRestrictions|ApprovedClouds",
+    "priority": "Required-when-CloudComputePermitted-specific-cloud-only",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "JurisdictionalRegulation",
+    "description": "Applicable jurisdictional data protection regulations governing this data. Multiple regulations may apply (e.g., a US-based study with EU participants is subject to both HIPAA and GDPR).",
+    "collection": "RoP-Core-Governance",
+    "item_type": "enum",
+    "values": "HIPAA|GDPR|UK-GDPR|UK-DPA|PIPEDA|LGPD|PIPL|APP|POPIA|HIPAA+GDPR|GDPR+UK-GDPR|Multiple|None|Unknown",
+    "alternate_names": "PrivacyRegulation|DataProtectionRegime",
+    "priority": "Required",
+    "metadata_": {
+      "value_definitions": {
+        "HIPAA": "United States \u2014 Health Insurance Portability and Accountability Act",
+        "GDPR": "European Union \u2014 General Data Protection Regulation",
+        "UK-GDPR": "United Kingdom \u2014 UK GDPR (post-Brexit)",
+        "UK-DPA": "United Kingdom \u2014 Data Protection Act 2018",
+        "PIPEDA": "Canada \u2014 Personal Information Protection and Electronic Documents Act",
+        "LGPD": "Brazil \u2014 Lei Geral de Prote\u00e7\u00e3o de Dados",
+        "PIPL": "China \u2014 Personal Information Protection Law",
+        "APP": "Australia \u2014 Privacy Act / Australian Privacy Principles",
+        "POPIA": "South Africa \u2014 Protection of Personal Information Act",
+        "Multiple": "Three or more regimes apply; record specifics in metadata_"
+      }
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "DataResidencyRequirement",
+    "description": "Geographic restrictions on where the data may be stored or processed. GDPR-governed data, for example, often carries residency requirements that limit storage to EEA jurisdictions or jurisdictions with adequacy decisions.",
+    "collection": "RoP-Core-Governance",
+    "item_type": "enum",
+    "values": "no-restriction|US-only|EU-EEA-only|UK-only|country-of-origin-only|adequacy-decision-required|specific-jurisdictions|unknown",
+    "alternate_names": "ResidencyRequirement|DataLocalization",
+    "priority": "Required-when-JurisdictionalRegulation-GDPR",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "IRBProtocolNumber",
+    "description": "Institutional Review Board (IRB) or Research Ethics Committee (REC) protocol number under which the data was collected and is being shared. Required for traceability when downstream users need to verify ethical approval scope.",
+    "collection": "RoP-Core-Governance",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "IRBNumber|RECProtocolID|EthicsApprovalID",
+    "priority": "Required",
+    "metadata_": {
+      "format": "free text; institutional convention",
+      "examples": [
+        "NIH-CARD-2023-0017",
+        "WCG-IRB-20240312"
+      ]
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "DataAccessCommittee",
+    "description": "Name and identifier of the Data Access Committee (DAC) governing access requests for this data. JSON object: {name, identifier, contact_email, governance_url}.",
+    "collection": "RoP-Core-Governance",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "DAC|GoverningCommittee",
+    "priority": "Required-when-ResharePermitted-permitted-with-DAC-approval",
+    "metadata_": {
+      "format": "JSON object",
+      "schema": {
+        "name": "human-readable DAC name",
+        "identifier": "stable DAC identifier (DUNS, ROR, or governance system ID)",
+        "contact_email": "DAC submissions inbox",
+        "governance_url": "URL to DAC submission instructions and policies"
+      }
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "DUAReference",
+    "description": "Reference to the Data Use Agreement governing this data: DOI, signed-document hash, or repository-internal DUA identifier. Enables downstream users to retrieve and verify the exact agreement under which the data is shared.",
+    "collection": "RoP-Core-Governance",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "DUAID|DataUseAgreement",
+    "priority": "Required",
+    "metadata_": {
+      "format": "DOI | URL | content-hash | repository-internal ID",
+      "examples": [
+        "10.5281/zenodo.12345",
+        "sha256:abc123...",
+        "AMP-PD-DUA-v3.2"
+      ]
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "RegistrationOfRecord",
+    "description": "Trial or study registration identifier when applicable: clinicaltrials.gov NCT number, EudraCT, ISRCTN, ChiCTR, or institutional registry identifier. Provides public-record traceability.",
+    "collection": "RoP-Core-Governance",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "TrialID|StudyRegistration|NCTNumber",
+    "priority": "Recommended",
+    "metadata_": {
+      "format": "registry-prefix:identifier",
+      "examples": [
+        "ClinicalTrials.gov:NCT04293367",
+        "EudraCT:2020-001234-12",
+        "ISRCTN:12345678"
+      ]
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ContactPI",
+    "description": "Principal Investigator contact information for re-contact, clarification, or collaboration inquiries. JSON object: {name, ORCID, email, institution, ROR}. ORCID and ROR provide stable identifiers that survive institutional moves; email and name provide working contact.",
+    "collection": "RoP-Core-Governance",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "PrincipalInvestigator|PIContact",
+    "priority": "Required",
+    "metadata_": {
+      "format": "JSON object",
+      "schema": {
+        "name": "human-readable name",
+        "orcid": "ORCID iD (https://orcid.org/NNNN-NNNN-NNNN-NNNN)",
+        "email": "current contact email",
+        "institution": "institution name at time of registration",
+        "ror": "ROR identifier of institution (https://ror.org/...)"
+      }
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ContactDataSteward",
+    "description": "Designated data steward or technical contact for questions about data structure, processing, access mechanics, or computational reproducibility. Often distinct from the PI: the steward is the person who actually knows where the data lives and how to use it. JSON object: {name, email, role, institution}.",
+    "collection": "RoP-Core-Governance",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "DataSteward|TechnicalContact",
+    "priority": "Recommended",
+    "metadata_": {
+      "format": "JSON object",
+      "schema": {
+        "name": "human-readable name",
+        "email": "current contact email",
+        "role": "data steward | data manager | bioinformatician | repository administrator",
+        "institution": "institution name"
+      }
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  }
+]

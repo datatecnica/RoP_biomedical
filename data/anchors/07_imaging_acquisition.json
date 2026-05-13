@@ -1,0 +1,369 @@
+[
+  {
+    "item": "ImagingModality",
+    "description": "Imaging modality. Determines which other anchors apply: MRI brings field strength and sequence type; PET brings tracer and injected dose; CT brings tube voltage; OCT brings axial resolution; ultrasound brings transducer frequency. DICOM tag (0008,0060) maps directly here.",
+    "collection": "RoP-Core-Imaging",
+    "item_type": "enum",
+    "values": "MRI|fMRI|dMRI|MRS|PET|SPECT|CT|X-ray|ultrasound|OCT|fundus-photography|EEG|MEG|ECG|other",
+    "alternate_names": "Modality|DICOMModality",
+    "priority": "Required-for-imaging-record",
+    "metadata_": {
+      "dicom_tag": "(0008,0060) Modality",
+      "value_definitions": {
+        "MRI": "Structural MRI (T1, T2, FLAIR, DWI as anatomical)",
+        "fMRI": "Functional MRI (BOLD)",
+        "dMRI": "Diffusion MRI (DTI, NODDI, multi-shell)",
+        "MRS": "Magnetic resonance spectroscopy",
+        "PET": "Positron emission tomography",
+        "SPECT": "Single-photon emission computed tomography (e.g., DaTscan for PD)",
+        "OCT": "Optical coherence tomography (retinal imaging)",
+        "fundus-photography": "Color fundus retinal imaging"
+      }
+    },
+    "source_authority": "DICOM",
+    "source_version": "DICOM-2024",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ImagingScannerManufacturer",
+    "description": "Scanner manufacturer. DICOM tag (0008,0070). Critical for cross-cohort harmonization because Siemens / GE / Philips / Canon scanners produce systematically different intensity distributions even with nominally identical sequences. Multi-site studies typically include manufacturer as a covariate.",
+    "collection": "RoP-Core-Imaging",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "Manufacturer|DICOMManufacturer",
+    "priority": "Required-for-imaging-record",
+    "metadata_": {
+      "dicom_tag": "(0008,0070) Manufacturer",
+      "common_values": [
+        "Siemens Healthineers",
+        "GE Healthcare",
+        "Philips Healthcare",
+        "Canon Medical Systems",
+        "Hitachi",
+        "United Imaging",
+        "Toshiba"
+      ]
+    },
+    "source_authority": "DICOM",
+    "source_version": "DICOM-2024",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ImagingScannerModel",
+    "description": "Specific scanner model. DICOM tag (0008,1090). Examples: 'MAGNETOM Prisma' (Siemens 3T research scanner), 'SIGNA Premier' (GE 3T), 'Ingenia Elition' (Philips 3T), 'Discovery MI' (GE PET/CT). Distinct from manufacturer because batch effects often track model rather than vendor.",
+    "collection": "RoP-Core-Imaging",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "Model|DICOMManufacturerModelName",
+    "priority": "Required-for-imaging-record",
+    "metadata_": {
+      "dicom_tag": "(0008,1090) ManufacturerModelName"
+    },
+    "source_authority": "DICOM",
+    "source_version": "DICOM-2024",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ImagingScannerSoftwareVersion",
+    "description": "Scanner software version at acquisition time. DICOM tag (0018,1020). Examples: 'syngo MR XA31' (Siemens), 'DV29.0_R02_2110.b' (GE). Software versions periodically introduce reconstruction algorithm changes that produce subtle quantitative differences \u2014 recording the version supports reproducibility audits.",
+    "collection": "RoP-Core-Imaging",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "SoftwareVersion|DICOMSoftwareVersions",
+    "priority": "Recommended-for-imaging-record",
+    "metadata_": {
+      "dicom_tag": "(0018,1020) SoftwareVersions"
+    },
+    "source_authority": "DICOM",
+    "source_version": "DICOM-2024",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ImagingFieldStrength",
+    "description": "Static magnetic field strength in Tesla. DICOM tag (0018,0087). Required for MRI/fMRI/dMRI/MRS modalities; null otherwise. Cross-cohort meta-analysis typically stratifies by field strength because 1.5T, 3T, and 7T scanners produce systematically different SNR, contrast, and susceptibility artifacts.",
+    "collection": "RoP-Core-Imaging",
+    "item_type": "numeric",
+    "values": null,
+    "alternate_names": "FieldStrength|MagneticFieldStrength",
+    "priority": "Required-when-modality-MRI",
+    "metadata_": {
+      "dicom_tag": "(0018,0087) MagneticFieldStrength",
+      "unit": "Tesla",
+      "common_values": [
+        1.5,
+        3.0,
+        7.0
+      ]
+    },
+    "source_authority": "DICOM",
+    "source_version": "DICOM-2024",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated",
+    "unit_of_measure": "T",
+    "unit_vocabulary": "UCUM",
+    "plausible_min": 0.1,
+    "plausible_max": 11.7
+  },
+  {
+    "item": "ImagingSequenceType",
+    "description": "Pulse sequence or acquisition type. For MRI: T1w, T2w, FLAIR, DWI, DTI, fMRI-BOLD, ASL, MRS, SWI, MP-RAGE, MP2RAGE. For PET: dynamic vs static. For CT: contrast-enhanced vs non-contrast. Free text because the sequence taxonomy is broad and evolves.",
+    "collection": "RoP-Core-Imaging",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "SequenceType|PulseSequence",
+    "priority": "Required-for-imaging-record",
+    "metadata_": {
+      "max_length": 128,
+      "examples": [
+        "T1w-MPRAGE",
+        "T2w-FLAIR",
+        "DTI-64dir",
+        "rs-fMRI",
+        "ASL-pCASL",
+        "PET-static-30min",
+        "CT-non-contrast"
+      ]
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ImagingAcquisitionParameters",
+    "description": "Modality-specific acquisition parameters as JSON object. Key parameters that affect downstream analysis. For MRI: TR, TE, TI, flip_angle, voxel_size_mm, slice_thickness_mm, FoV_mm, num_slices, multiband_factor. For PET: scan_duration_min, frame_count, reconstruction_method. For CT: tube_voltage_kVp, tube_current_mA, slice_thickness_mm. Free-form to accommodate modality variation.",
+    "collection": "RoP-Core-Imaging",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "AcquisitionParameters|ScanParameters",
+    "priority": "Required-for-imaging-record",
+    "metadata_": {
+      "format": "JSON object with modality-specific keys",
+      "mri_keys": [
+        "repetition_time_ms",
+        "echo_time_ms",
+        "inversion_time_ms",
+        "flip_angle_deg",
+        "voxel_size_mm",
+        "slice_thickness_mm",
+        "field_of_view_mm",
+        "num_slices",
+        "multiband_factor"
+      ],
+      "pet_keys": [
+        "scan_duration_min",
+        "frame_count",
+        "reconstruction_method",
+        "attenuation_correction"
+      ],
+      "ct_keys": [
+        "tube_voltage_kVp",
+        "tube_current_mA",
+        "slice_thickness_mm",
+        "pitch"
+      ]
+    },
+    "source_authority": "DICOM",
+    "source_version": "DICOM-2024",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ImagingContrastAgent",
+    "description": "Contrast agent administered, when applicable. JSON object {agent_name, dose_mL, dose_mmol_per_kg, administration_route, timing_relative_to_scan_min}. Common in MRI (gadolinium-based: Gadovist, Dotarem, Magnevist) and CT (iodinated). Null for native-contrast scans.",
+    "collection": "RoP-Core-Imaging",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "ContrastAgent|GadoliniumAgent",
+    "priority": "Required-when-contrast-administered",
+    "metadata_": {
+      "format": "JSON object",
+      "common_mri_agents": [
+        "gadobutrol (Gadovist)",
+        "gadoterate (Dotarem)",
+        "gadopentetate (Magnevist)",
+        "gadoxetate (Eovist/Primovist)"
+      ],
+      "common_ct_agents": [
+        "iohexol (Omnipaque)",
+        "iopromide (Ultravist)",
+        "ioversol (Optiray)"
+      ]
+    },
+    "source_authority": "DICOM",
+    "source_version": "DICOM-2024",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ImagingPETTracer",
+    "description": "PET radiotracer used. JSON object {tracer_name, target, isotope, manufacturer, batch_id, half_life_min}. Critical for ND research because amyloid (florbetaben/florbetapir/flutemetamol/PiB) and tau (flortaucipir/MK-6240/PI-2620) tracers measure fundamentally different pathology and are not interchangeable across cohorts.",
+    "collection": "RoP-Core-Imaging",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "PETTracer|Radiotracer",
+    "priority": "Required-when-modality-PET",
+    "metadata_": {
+      "format": "JSON object",
+      "common_amyloid_tracers": [
+        "[18F]florbetaben (Neuraceq)",
+        "[18F]florbetapir (Amyvid)",
+        "[18F]flutemetamol (Vizamyl)",
+        "[11C]PiB"
+      ],
+      "common_tau_tracers": [
+        "[18F]flortaucipir (Tauvid, AV-1451)",
+        "[18F]MK-6240",
+        "[18F]PI-2620",
+        "[18F]RO-948"
+      ],
+      "common_other_tracers": [
+        "[18F]FDG (metabolism)",
+        "[18F]FDOPA (dopamine synthesis - PD)",
+        "[123I]FP-CIT (DaTscan dopamine transporter - PD/SPECT)"
+      ]
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ImagingPETInjectedDoseMBq",
+    "description": "PET tracer injected dose in megabecquerels (MBq). DICOM tag (0018,1074) RadionuclideTotalDose. Required for SUV computation. Combined with subject body weight (Theme 12 measurement) and injection-to-scan time interval, enables SUV / SUVR derivation.",
+    "collection": "RoP-Core-Imaging",
+    "item_type": "numeric",
+    "values": null,
+    "alternate_names": "PETInjectedDose|RadionuclideTotalDose",
+    "priority": "Required-when-modality-PET",
+    "metadata_": {
+      "dicom_tag": "(0018,1074) RadionuclideTotalDose",
+      "unit": "MBq",
+      "plausible_range": "[100, 800]"
+    },
+    "source_authority": "DICOM",
+    "source_version": "DICOM-2024",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated",
+    "unit_of_measure": "MBq",
+    "unit_vocabulary": "UCUM",
+    "plausible_min": 0,
+    "plausible_max": 1500
+  },
+  {
+    "item": "ImagingDICOMSeriesUID",
+    "description": "DICOM Series Instance UID (0020,000E). Globally unique per imaging series; enables traceability from RoP back to source DICOM archives. Required when source data is DICOM-derived; null when imaging originated as NIfTI/BIDS without DICOM provenance.",
+    "collection": "RoP-Core-Imaging",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "SeriesInstanceUID|DICOMUID",
+    "priority": "Required-when-DICOM-source",
+    "metadata_": {
+      "dicom_tag": "(0020,000E) SeriesInstanceUID",
+      "format": "DICOM UID per ISO 9834-3"
+    },
+    "source_authority": "DICOM",
+    "source_version": "DICOM-2024",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ImagingBIDSConformance",
+    "description": "Brain Imaging Data Structure (BIDS) conformance level. BIDS is the de facto standard for organizing neuroimaging datasets and is required for many community pipelines (fMRIPrep, QSIPrep, MRIQC). Recording conformance level helps consumers know whether they can run BIDS-Apps directly or need a pre-processing step.",
+    "collection": "RoP-Core-Imaging",
+    "item_type": "enum",
+    "values": "BIDS-compliant|BIDS-partial|BIDS-derivatives|non-BIDS|unknown",
+    "alternate_names": "BIDSConformance",
+    "priority": "Recommended-for-imaging-record",
+    "metadata_": {
+      "value_definitions": {
+        "BIDS-compliant": "Passes bids-validator without errors",
+        "BIDS-partial": "Mostly conformant but with documented deviations",
+        "BIDS-derivatives": "BIDS-Derivatives format (processed outputs)",
+        "non-BIDS": "Custom organization scheme",
+        "unknown": "BIDS conformance not assessed"
+      },
+      "reference_url": "https://bids-specification.readthedocs.io/"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ImagingProtocolReference",
+    "description": "Reference to the acquisition protocol document (DOI, URL, or institutional protocol ID). Many cohort consortia (PPMI, ADNI, GENFI, EU-AIMS) publish detailed acquisition protocols that downstream consumers cite when describing methods.",
+    "collection": "RoP-Core-Imaging",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "AcquisitionProtocol|ProtocolReference",
+    "priority": "Recommended-for-imaging-record",
+    "metadata_": {
+      "format": "DOI | URL | institutional protocol ID",
+      "max_length": 512,
+      "examples": [
+        "10.1002/mds.22340 (PPMI imaging protocol)",
+        "https://adni.loni.usc.edu/methods/mri-tool/mri-acquisition/"
+      ]
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ImagingQCStatus",
+    "description": "Quality control status from the cohort's QC pipeline. Records whether this scan passed automated and/or manual QC. JSON object {status, qc_pipeline, qc_pipeline_version, qc_notes, manual_review}. Common QC pipelines: MRIQC for structural MRI, FMRIPREP for fMRI, dMRIQC for diffusion. Allows downstream consumers to filter out low-quality scans without re-running QC.",
+    "collection": "RoP-Core-Imaging",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "QCStatus|QualityControlStatus",
+    "priority": "Recommended-for-imaging-record",
+    "metadata_": {
+      "format": "JSON object",
+      "schema": {
+        "status": "passed | passed-with-warnings | failed | not-yet-assessed",
+        "qc_pipeline": "MRIQC | FMRIPREP | dMRIQC | manual | other",
+        "qc_pipeline_version": "version string",
+        "qc_notes": "free-text notes",
+        "manual_review": "boolean \u2014 was a human reviewer involved"
+      }
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  }
+]

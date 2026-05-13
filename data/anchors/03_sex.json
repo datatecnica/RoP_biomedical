@@ -1,0 +1,52 @@
+[
+  {
+    "item": "SexChromosomal",
+    "description": "Sex chromosome configuration as determined by genetic data (karyotype, SNP array, or sequencing). Required for genetic analyses; correlated with but not identical to sex_at_birth.",
+    "collection": "RoP-Core-Sex",
+    "item_type": "enum",
+    "values": "XX|XY|XO|XXY|XYY|XXX|other_aneuploidy|unknown",
+    "alternate_names": "ChromosomalSex|GeneticSex|KaryotypicSex",
+    "priority": "Required-for-genetic-cohorts",
+    "metadata_": {
+      "determination_method_field": "SexChromosomalMethod"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "SexAtBirth",
+    "description": "Biological sex assigned at birth (clinical/administrative).",
+    "collection": "RoP-Core-Sex",
+    "item_type": "enum",
+    "values": "Male|Female|Intersex|Unknown",
+    "alternate_names": "Sex|BirthSex|AssignedSex",
+    "priority": "Required",
+    "source_authority": "LOINC",
+    "source_code": "76689-9",
+    "source_version": "LOINC-2.78",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "GenderIdentity",
+    "description": "Self-reported gender identity. Distinct from sex_chromosomal and sex_at_birth.",
+    "collection": "RoP-Core-Sex",
+    "item_type": "enum",
+    "values": "Man|Woman|TransgenderMan|TransgenderWoman|NonBinary|Other|PreferNotToAnswer|Unknown",
+    "alternate_names": "Gender",
+    "priority": "Optional",
+    "source_authority": "LOINC",
+    "source_code": "76691-5",
+    "source_version": "LOINC-2.78",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  }
+]

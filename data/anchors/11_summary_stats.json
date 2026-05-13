@@ -1,0 +1,521 @@
+[
+  {
+    "item": "SummaryStatsType",
+    "description": "Category of summary statistics dataset. Determines which downstream tools and parsers apply, what columns to expect in the underlying file, and which meta-analysis methods are appropriate.",
+    "collection": "RoP-Core-SummaryStats",
+    "item_type": "enum",
+    "values": "GWAS-SNP|GWAS-INDEL|GWAS-SV|GWAS-CNV|gene-burden|gene-expression-association|protein-association|methylation-association|metabolite-association|TWAS|PWAS|MWAS|colocalization|Mendelian-randomization|polygenic-score|sQTL|eQTL|pQTL|mQTL|other",
+    "alternate_names": "AnalysisType|StatsCategory",
+    "priority": "Required-for-summary-stats-dataset",
+    "metadata_": {
+      "value_definitions": {
+        "GWAS-SNP": "Genome-wide association study, single nucleotide variants",
+        "GWAS-INDEL": "GWAS, insertion/deletion variants",
+        "GWAS-SV": "GWAS, structural variants",
+        "GWAS-CNV": "GWAS, copy number variants",
+        "gene-burden": "Gene-level rare variant burden test (SKAT, BURDEN, ACAT)",
+        "gene-expression-association": "Gene-level transcriptomic association",
+        "protein-association": "Protein-level association from proteomics data",
+        "methylation-association": "EWAS-style methylation association",
+        "metabolite-association": "Metabolomics association study",
+        "TWAS": "Transcriptome-wide association study",
+        "PWAS": "Proteome-wide association study",
+        "MWAS": "Metabolome- or methylation-wide association study",
+        "colocalization": "Coloc/eCAVIAR/SuSiE-style colocalization results",
+        "Mendelian-randomization": "MR causal inference results",
+        "polygenic-score": "PRS weights for trait prediction",
+        "sQTL": "Splice quantitative trait loci",
+        "eQTL": "Expression quantitative trait loci",
+        "pQTL": "Protein quantitative trait loci",
+        "mQTL": "Methylation quantitative trait loci"
+      }
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "SummaryStatsTrait",
+    "description": "The trait, phenotype, or outcome the summary statistics describe. Free text but should resolve to a controlled vocabulary code where possible (HPO, EFO, Mondo, MeSH). Examples: 'Parkinson disease' (Mondo:0005180), 'late-onset Alzheimer disease' (Mondo:0007089), 'CSF total tau levels' (free text), 'plasma neurofilament light' (free text). Companion field SummaryStatsTraitCode carries the controlled code when one is available.",
+    "collection": "RoP-Core-SummaryStats",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "Trait|Phenotype|Outcome",
+    "priority": "Required-for-summary-stats-dataset",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "SummaryStatsTraitCode",
+    "description": "Controlled vocabulary code for SummaryStatsTrait, when available. Format: VOCAB:identifier (HPO, EFO, Mondo, MeSH). Enables cross-study harmonization for meta-analysis: studies that report the same trait under different free-text names but the same code can be combined.",
+    "collection": "RoP-Core-SummaryStats",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "TraitCode|TraitOntologyCode",
+    "priority": "Recommended-for-summary-stats-dataset",
+    "metadata_": {
+      "format": "VOCAB:identifier",
+      "preferred_vocabularies": [
+        "EFO",
+        "Mondo",
+        "HPO",
+        "MeSH"
+      ]
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "SummaryStatsScope",
+    "description": "Whether the summary statistics come from a primary single-cohort analysis, a meta-analysis combining multiple cohorts, a fixed-effects pooled analysis, or a derived analysis (conditional, sex-stratified, ancestry-stratified). Distinguishing primary from meta is essential for downstream meta-analysis to avoid double-counting cohorts.",
+    "collection": "RoP-Core-SummaryStats",
+    "item_type": "enum",
+    "values": "primary-single-cohort|meta-analysis-fixed-effects|meta-analysis-random-effects|meta-analysis-MetaSoft|conditional-analysis|sex-stratified|ancestry-stratified|trans-ancestry|case-only|family-based|other",
+    "alternate_names": "AnalysisScope|MetaAnalysisType",
+    "priority": "Required-for-summary-stats-dataset",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "SummaryStatsContributingCohorts",
+    "description": "List of cohorts contributing to this summary statistics dataset, when SummaryStatsScope indicates meta-analysis or trans-ancestry. JSON array of {cohort_name, cohort_id, sample_size, case_count, control_count, ancestry} entries. Required for meta-analysis to avoid double-counting and to support cohort-stratified sensitivity analyses.",
+    "collection": "RoP-Core-SummaryStats",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "ContributingStudies|InputCohorts",
+    "priority": "Required-when-meta-analysis",
+    "metadata_": {
+      "format": "JSON array",
+      "schema_per_entry": {
+        "cohort_name": "human-readable cohort name",
+        "cohort_id": "stable identifier",
+        "sample_size": "total N contributing",
+        "case_count": "N cases (for case-control)",
+        "control_count": "N controls (for case-control)",
+        "ancestry": "1KG superpopulation or finer-grained label"
+      }
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "SummaryStatsTotalN",
+    "description": "Total effective sample size for the summary statistics. For meta-analyses, this is the sum across contributing cohorts. For QTL studies, this is the per-tissue sample size. Critical for power calculations and meta-analysis weighting.",
+    "collection": "RoP-Core-SummaryStats",
+    "item_type": "numeric",
+    "values": null,
+    "alternate_names": "TotalSampleSize|EffectiveN",
+    "priority": "Required-for-summary-stats-dataset",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated",
+    "unit_of_measure": "1",
+    "unit_vocabulary": "UCUM",
+    "plausible_min": 0,
+    "plausible_max": 1000000000.0
+  },
+  {
+    "item": "SummaryStatsCaseN",
+    "description": "Number of cases for case-control analyses. Null for continuous traits and quantitative phenotypes.",
+    "collection": "RoP-Core-SummaryStats",
+    "item_type": "numeric",
+    "values": null,
+    "alternate_names": "CaseSampleSize|NCases",
+    "priority": "Required-when-case-control",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated",
+    "unit_of_measure": "1",
+    "unit_vocabulary": "UCUM",
+    "plausible_min": 0,
+    "plausible_max": 1000000000.0
+  },
+  {
+    "item": "SummaryStatsControlN",
+    "description": "Number of controls for case-control analyses.",
+    "collection": "RoP-Core-SummaryStats",
+    "item_type": "numeric",
+    "values": null,
+    "alternate_names": "ControlSampleSize|NControls",
+    "priority": "Required-when-case-control",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated",
+    "unit_of_measure": "1",
+    "unit_vocabulary": "UCUM",
+    "plausible_min": 0,
+    "plausible_max": 1000000000.0
+  },
+  {
+    "item": "SummaryStatsModel",
+    "description": "Statistical model used to generate the summary statistics. Examples: 'logistic regression', 'linear regression', 'Cox PH', 'mixed-effects (BOLT-LMM)', 'mixed-effects (SAIGE)', 'mixed-effects (REGENIE)', 'firth-corrected logistic', 'SKAT', 'BURDEN', 'ACAT-V', 'ACAT-O', 'STAAR'. Free text but should follow a recognizable convention.",
+    "collection": "RoP-Core-SummaryStats",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "AnalysisModel|StatisticalModel",
+    "priority": "Required-for-summary-stats-dataset",
+    "metadata_": {
+      "max_length": 128
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "SummaryStatsCovariates",
+    "description": "Covariates included in the model. Pipe-delimited or JSON array. Critical for meta-analysis interpretation and for re-using PCA/UMAP loadings appropriately. Examples: 'AgeAtVisit | SexAtBirth | PC1-10 | study_site' or as JSON: [{name: 'AgeAtVisit'}, {name: 'PC1-10', source: 'genetic-ancestry-PCA'}, {name: 'study_site', encoding: 'one-hot'}].",
+    "collection": "RoP-Core-SummaryStats",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "Covariates|AdjustmentVariables",
+    "priority": "Required-for-summary-stats-dataset",
+    "metadata_": {
+      "format": "pipe-delimited or JSON array",
+      "common_covariates": [
+        "age",
+        "sex",
+        "PC1-10",
+        "study_site",
+        "genotyping_batch",
+        "BMI",
+        "smoking_status"
+      ]
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "SummaryStatsResultsURI",
+    "description": "URI of the primary results file (the actual per-variant, per-gene, or per-component result table). Same URI scheme rules as Tier 8 DataAssetURI; DRS preferred. Format expected to match SummaryStatsType: GWAS Catalog harmonized format for variant-level studies, gene-level format with HGNC gene IDs for gene-burden/TWAS/etc.",
+    "collection": "RoP-Core-SummaryStats",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "ResultsFileURI|StatsTableURI",
+    "priority": "Required-for-summary-stats-dataset",
+    "metadata_": {
+      "format": "URI per Tier 8 DataAssetURI rules",
+      "preferred_results_format": "GWAS Catalog harmonized format for variant-level; standardized gene-level format for non-variant analyses"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "SummaryStatsHarmonizedFormat",
+    "description": "Whether the results file conforms to the GWAS Catalog harmonized format (https://www.ebi.ac.uk/gwas/docs/methods/summary-statistics). Harmonized format has standardized column names and order, making cross-study integration straightforward without per-study column mapping.",
+    "collection": "RoP-Core-SummaryStats",
+    "item_type": "binary",
+    "values": "true|false|partial",
+    "alternate_names": "GWASCatalogHarmonized",
+    "priority": "Recommended-for-variant-level-summary-stats",
+    "metadata_": {
+      "value_definitions": {
+        "true": "Fully conforms to GWAS Catalog harmonized format",
+        "partial": "Some but not all required columns present",
+        "false": "Custom format; column mapping required"
+      }
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "SummaryStatsGenomicReference",
+    "description": "Reference assembly used for variant coordinates in summary statistics. Critical because GRCh37 and GRCh38 coordinates are not interchangeable; downstream meta-analysis requires liftover when mixing assemblies. Mirrors Tier 5 ReferenceAssembly but at the summary-stats granularity.",
+    "collection": "RoP-Core-SummaryStats",
+    "item_type": "enum",
+    "values": "GRCh38|GRCh37|T2T-CHM13|hg38|hg19|NotApplicable",
+    "alternate_names": "VariantReferenceAssembly",
+    "priority": "Required-when-variant-level-summary-stats",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "SummaryStatsImputationPanel",
+    "description": "Imputation reference panel used, when applicable. Examples: 'TOPMed-r3', 'HRC-r1.1', '1000G-Phase3', 'gnomAD-v3', 'GP2-internal'. Determines which variants are present and influences meta-analysis weighting.",
+    "collection": "RoP-Core-SummaryStats",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "ImputationReference|ReferencePanel",
+    "priority": "Recommended-for-variant-level-summary-stats",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "SummaryStatsAncestry",
+    "description": "Ancestry composition of the analyzed sample. For trans-ancestry meta-analyses, this is a structured representation of the per-ancestry contribution. For single-ancestry analyses, this is the single ancestry label. Critical for downstream consumers to apply appropriate fine-mapping reference panels and for interpreting effect-size heterogeneity.",
+    "collection": "RoP-Core-SummaryStats",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "AncestryComposition",
+    "priority": "Required-for-summary-stats-dataset",
+    "metadata_": {
+      "format": "single ancestry label or JSON array of {ancestry, n} entries for multi-ancestry",
+      "example_single": "EUR",
+      "example_multi": "[{ancestry: 'EUR', n: 50000}, {ancestry: 'AFR', n: 12000}, {ancestry: 'EAS', n: 8000}]",
+      "preferred_vocabulary": "GP2 11-class or 1KG superpopulation labels"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "SummaryStatsSoftwareReference",
+    "description": "Software package and version used to compute the summary statistics. Examples: 'PLINK-2.0.0', 'BOLT-LMM-2.4.1', 'SAIGE-1.3.0', 'REGENIE-3.4', 'GENESIS-2.30.0', 'rvtests-2.1.0', 'limix-3.0.4', 'METAL-2020-05-05', 'METASOFT-2.0.1'. Required for reproducibility and for downstream tools that need to apply software-specific corrections.",
+    "collection": "RoP-Core-SummaryStats",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "SoftwareUsed|StatsSoftware",
+    "priority": "Required-for-summary-stats-dataset",
+    "metadata_": {
+      "max_length": 128
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "SummaryStatsLambdaGC",
+    "description": "Genomic inflation factor (lambda GC) for the summary statistics, when applicable. Diagnostic for population stratification and confounding. Values >1.10 typically indicate residual stratification needing correction.",
+    "collection": "RoP-Core-SummaryStats",
+    "item_type": "numeric",
+    "values": null,
+    "alternate_names": "LambdaGC|GenomicInflation",
+    "priority": "Recommended-for-variant-level-summary-stats",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated",
+    "unit_of_measure": "1",
+    "unit_vocabulary": "UCUM",
+    "plausible_min": 0.5,
+    "plausible_max": 5.0
+  },
+  {
+    "item": "SummaryStatsLDSCIntercept",
+    "description": "LDSC intercept and h2-SNP estimate as JSON object: {intercept, intercept_se, h2_snp, h2_snp_se, h2_pvalue, ratio}. Standardized LD score regression diagnostics for variant-level summary statistics.",
+    "collection": "RoP-Core-SummaryStats",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "LDSCDiagnostics",
+    "priority": "Recommended-for-variant-level-summary-stats",
+    "metadata_": {
+      "format": "JSON object",
+      "computed_via": "LDSC against ancestry-matched LD reference"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "SummaryStatsAccessLevel",
+    "description": "Access tier for the summary statistics. Aggregate summary statistics are often less restricted than individual-level data and may be openly publishable even when the underlying data is controlled. The relevant licensing and access requirements may differ from the cohort default and so are recorded explicitly.",
+    "collection": "RoP-Core-SummaryStats",
+    "item_type": "enum",
+    "values": "open|registered-access|controlled-access|embargoed|inherits-cohort-DUA",
+    "alternate_names": "StatsAccessLevel",
+    "priority": "Required-for-summary-stats-dataset",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ComponentLoadingsType",
+    "description": "Type of dimensionality-reduction loadings. Distinct anchor from SummaryStatsType because component loadings are typically used as covariates rather than as primary results, and consumers need to retrieve specific components (PC1-10, UMAP-1/2) by name. Common in biomedical analysis: PCA loadings on genotypes (population-stratification covariates), PCA loadings on expression (technical covariates), UMAP/t-SNE coordinates (visualization), NMF/factor-model loadings (deconvolution).",
+    "collection": "RoP-Core-ComponentLoadings",
+    "item_type": "enum",
+    "values": "genotype-PCA|expression-PCA|methylation-PCA|proteomics-PCA|expression-UMAP|expression-tSNE|spatial-UMAP|NMF|ICA|factor-model|other",
+    "alternate_names": "LoadingsType|DimReductionType",
+    "priority": "Required-for-component-loadings-dataset",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ComponentLoadingsURI",
+    "description": "URI of the loadings file. Format depends on use: per-individual loadings (rows = individuals, columns = components) for use as covariates; per-feature loadings (rows = SNPs/genes/proteins, columns = components) for back-projection; or both as paired files. Same URI scheme rules as Tier 8 DataAssetURI.",
+    "collection": "RoP-Core-ComponentLoadings",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "LoadingsFileURI|PCAFileURI",
+    "priority": "Required-for-component-loadings-dataset",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ComponentLoadingsScope",
+    "description": "Whether the loadings are per-individual (suitable as covariates), per-feature (suitable for back-projection), or both. Critical because consumers need different file formats for different uses.",
+    "collection": "RoP-Core-ComponentLoadings",
+    "item_type": "enum",
+    "values": "per-individual|per-feature|both",
+    "alternate_names": "LoadingsScope",
+    "priority": "Required-for-component-loadings-dataset",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ComponentLoadingsNComponents",
+    "description": "Number of components in the loadings file. For PCA, this is typically 10-20 (top components used as covariates). For UMAP/t-SNE, this is 2-3 (visualization components).",
+    "collection": "RoP-Core-ComponentLoadings",
+    "item_type": "numeric",
+    "values": null,
+    "alternate_names": "NComponents|NPCs",
+    "priority": "Required-for-component-loadings-dataset",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated",
+    "unit_of_measure": "1",
+    "unit_vocabulary": "UCUM",
+    "plausible_min": 1,
+    "plausible_max": 10000
+  },
+  {
+    "item": "ComponentLoadingsInputFeatures",
+    "description": "Description of the input features the dimensionality reduction was computed over. Free text but should be specific. Examples: 'GP2 release 7 imputed genotypes, MAF>0.01, LD-pruned r2<0.1', 'log-CPM gene expression after batch correction', '~10K CpG sites passing QC'. Critical for consumers deciding whether the loadings are appropriate for their use case.",
+    "collection": "RoP-Core-ComponentLoadings",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "InputFeatureSet",
+    "priority": "Required-for-component-loadings-dataset",
+    "metadata_": {
+      "max_length": 512
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ComponentLoadingsSoftware",
+    "description": "Software used to compute the loadings. Examples: 'PLINK-2.0.0 --pca', 'flashpca-2.1', 'scikit-learn-1.4 PCA', 'umap-learn-0.5.6', 'scanpy-1.10', 'GENESIS-2.30 PC-AiR'. Required for reproducibility because PCA implementations differ in their handling of missing data, scaling, and sign conventions.",
+    "collection": "RoP-Core-ComponentLoadings",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "LoadingsSoftware",
+    "priority": "Required-for-component-loadings-dataset",
+    "metadata_": {
+      "max_length": 128
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ComponentLoadingsVarianceExplained",
+    "description": "Per-component variance explained as JSON array of floats summing to <=1.0. For PCA, the standard 'scree plot' values; allows downstream consumers to choose how many components to use as covariates based on a variance-explained threshold rather than trusting the upstream choice. Null for UMAP/t-SNE/NMF where variance-explained is not the natural metric.",
+    "collection": "RoP-Core-ComponentLoadings",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "VarianceExplained|ScreeValues",
+    "priority": "Recommended-for-PCA-loadings",
+    "metadata_": {
+      "format": "JSON array of floats"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ComponentLoadingsDerivedFrom",
+    "description": "Identifier of the dataset from which the loadings were computed, when distinct from the cohort declaring this row. Important for re-use scenarios: GP2 PCA loadings computed on the GP2 reference set may be projected onto a new cohort, in which case the new cohort references the GP2 dataset as the source of the loadings.",
+    "collection": "RoP-Core-ComponentLoadings",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "LoadingsSourceDataset",
+    "priority": "Required-when-projected-loadings",
+    "metadata_": {
+      "rationale": "PCA-projection ancestry inference is the canonical example: the loadings are computed once on a reference panel (1KG, gnomAD, GP2-internal) and projected onto each new cohort. Recording the source enables consumers to verify projection correctness and to compare results across cohorts using the same projection."
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  }
+]

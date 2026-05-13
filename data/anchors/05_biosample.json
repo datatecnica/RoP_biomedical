@@ -1,0 +1,247 @@
+[
+  {
+    "item": "IsBiosample",
+    "description": "Boolean flag indicating this record represents (or is associated with) a physical biosample. When true, biosample_id and tissue_sample_type are required.",
+    "collection": "RoP-Core-Biosample",
+    "item_type": "binary",
+    "values": "True|False",
+    "alternate_names": "HasBiosample|BiosampleFlag",
+    "priority": "Required",
+    "metadata_": {
+      "true_label": "True",
+      "false_label": "False",
+      "triggers_required_fields": [
+        "BiosampleID",
+        "TissueSampleType"
+      ]
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "BiosampleID",
+    "description": "Globally unique identifier for the biosample within the cohort. Must be stable, non-PHI, and traceable to the consenting participant via BiosampleSubjectID.",
+    "collection": "RoP-Core-Biosample",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "SampleID|SpecimenID|BiosampleAccession",
+    "priority": "Required-when-IsBiosample-true",
+    "metadata_": {
+      "max_length": 64,
+      "must_be_unique_within_cohort": true,
+      "phi": false,
+      "case_sensitive": true
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ParentBiosampleID",
+    "description": "BiosampleID of the parent specimen for aliquots, derivatives, or processed samples. Null for top-level biosamples (original draws). Enables lineage tracking from draw \u2192 aliquots \u2192 assay-ready material.",
+    "collection": "RoP-Core-Biosample",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "ParentSampleID|SourceSampleID",
+    "priority": "Optional",
+    "metadata_": {
+      "fk_to": "BiosampleID",
+      "null_for_top_level": true
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ExternalBiosampleIDs",
+    "description": "Array of {authority, identifier} pairs for the same physical specimen tracked under different IDs in external systems (biobanks, sequencing centers, GenBank/SRA accessions, consortium-level IDs).",
+    "collection": "RoP-Core-Biosample",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "AlternateSampleIDs|CrossReferenceIDs",
+    "priority": "Optional",
+    "metadata_": {
+      "format": "JSON array of objects",
+      "schema": "[{\"authority\": str, \"identifier\": str}]",
+      "examples": "[{\"authority\":\"NHGRI-AnVIL\",\"identifier\":\"SM-X1234\"},{\"authority\":\"GP2-internal\",\"identifier\":\"PD-001-BL\"}]"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "TissueSampleType",
+    "description": "Free-text description of the biosample tissue/material, capturing the level of detail recorded at collection. Examples: 'frontal cortex BA9 contralateral frozen', 'PBMC RNAlater stabilized draw 2 of 3', 'CSF lumbar puncture clear'.",
+    "collection": "RoP-Core-Biosample",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "SampleDescription|TissueType|SpecimenType",
+    "priority": "Required-when-IsBiosample-true",
+    "metadata_": {
+      "max_length": 1024,
+      "free_text": true,
+      "companion_field": "SampleTypeControlled",
+      "notes": "Ground-truth field. Forge attempts parallel resolution to SampleTypeControlled but does not overwrite this."
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "SampleTypeControlled",
+    "description": "Controlled-vocabulary classification of biosample type, derived from TissueSampleType when Forge resolution confidence is sufficient.",
+    "collection": "RoP-Core-Biosample",
+    "item_type": "enum",
+    "values": "Blood-Whole|Blood-PBMC|Blood-Plasma|Blood-Serum|Blood-Buffy|DNA-Genomic|DNA-cfDNA|RNA-Total|RNA-mRNA|CSF|Urine|Saliva|Stool|Brain-Tissue-Frozen|Brain-Tissue-FFPE|Brain-Tissue-Fresh|Skin-Fibroblast|iPSC-Line|Organoid|Other-Solid-Tissue|Other-Fluid|Unknown",
+    "alternate_names": "SampleClass|MaterialType",
+    "priority": "Optional",
+    "metadata_": {
+      "derived_from": "TissueSampleType",
+      "controlled_vocabularies": [
+        "OBI",
+        "UBERON"
+      ],
+      "min_confidence_for_auto_population": 0.85
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "BiosampleSubjectID",
+    "description": "Foreign key to the participant (SubjectID) from whom the biosample was collected. Required for biosamples to enable participant-level analysis.",
+    "collection": "RoP-Core-Biosample",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "DonorID|ParticipantID",
+    "priority": "Required-when-IsBiosample-true",
+    "metadata_": {
+      "fk_to": "SubjectID"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "BiosampleVisitID",
+    "description": "Reference to the study visit (VisitNumber or composite SubjectID+VisitNumber) at which the biosample was collected. Required for longitudinal cohorts.",
+    "collection": "RoP-Core-Biosample",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "CollectionVisit|VisitOfCollection",
+    "priority": "Required-for-longitudinal-cohorts",
+    "metadata_": {
+      "fk_composite": [
+        "SubjectID",
+        "VisitNumber"
+      ]
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "CollectionDate",
+    "description": "Calendar date of biosample collection. Can be censored to year-month for PHI compliance. Should match VisitDate of the associated BiosampleVisitID when applicable.",
+    "collection": "RoP-Core-Biosample",
+    "item_type": "date",
+    "values": "YYYY-MM[-DD]",
+    "alternate_names": "DrawDate|SampleCollectionDate",
+    "priority": "Required-when-IsBiosample-true",
+    "metadata_": {
+      "format": "ISO-8601-partial",
+      "phi": true,
+      "consistency_check": "should_equal_VisitDate_when_BiosampleVisitID_set"
+    },
+    "source_authority": "LOINC",
+    "source_code": "68963-8",
+    "source_version": "LOINC-2.78",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "ProcessingProtocol",
+    "description": "Identifier or DOI of the SOP / protocol used to process the biosample. Examples: PPMI BioFIND SOP v3.2, GP2 standard genotyping protocol, custom DOI.",
+    "collection": "RoP-Core-Biosample",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "ProtocolID|SOP|ProcessingSOP",
+    "priority": "Optional",
+    "metadata_": {
+      "max_length": 512,
+      "format_hint": "DOI or named protocol version"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "StorageTemperature",
+    "description": "Storage condition at the time of last freeze / current state. Critical for downstream assay viability.",
+    "collection": "RoP-Core-Biosample",
+    "item_type": "enum",
+    "values": "-80C|-20C|LN2|4C|RT|Other|Unknown",
+    "alternate_names": "StorageCondition|FreezerTemp",
+    "priority": "Optional",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "AliquotVolumeUL",
+    "description": "Aliquot volume in microliters. Null for solid tissue specimens or when not applicable.",
+    "collection": "RoP-Core-Biosample",
+    "item_type": "numeric",
+    "values": "0.0..1000000.0",
+    "alternate_names": "Volume|VolumeUL",
+    "priority": "Optional",
+    "metadata_": {
+      "unit": "microliters",
+      "precision": 1,
+      "null_for_solid_tissue": true
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": [
+      "RoP-Core"
+    ],
+    "curation_status": "expert-curated",
+    "unit_of_measure": "uL",
+    "unit_vocabulary": "UCUM",
+    "plausible_min": 0,
+    "plausible_max": 50000
+  }
+]

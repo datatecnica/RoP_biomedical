@@ -1,0 +1,238 @@
+[
+  {
+    "item": "InstrumentID",
+    "description": "Stable RoP-internal identifier for a clinical assessment instrument (cognitive battery, motor exam, neuropsychiatric inventory, functional assessment, quality-of-life scale, composite battery). Format: 'RoP-Instrument:NNNNNNN'. Each version of an instrument is a distinct InstrumentID — MoCA-7.0 and MoCA-8.1 are different rows because their scoring conventions and items differ.",
+    "collection": "RoP-Core-ClinicalInstruments",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "InstrumentAccession",
+    "priority": "Required-for-clinical-instrument-record",
+    "metadata_": { "format": "RoP-Instrument:NNNNNNN", "stability": "never recycled" },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": ["RoP-Core"],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "InstrumentName",
+    "description": "Full instrument name. Examples: 'Montreal Cognitive Assessment', 'Mini-Mental State Examination', 'Movement Disorder Society Unified Parkinson Disease Rating Scale', 'Neuropsychiatric Inventory', 'Geriatric Depression Scale', 'Functional Activities Questionnaire', 'Clinical Dementia Rating', 'Alzheimer Disease Assessment Scale - Cognitive Subscale'.",
+    "collection": "RoP-Core-ClinicalInstruments",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "AssessmentName|ScaleName",
+    "priority": "Required-for-clinical-instrument-record",
+    "metadata_": { "max_length": 256 },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": ["RoP-Core"],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "InstrumentAbbreviation",
+    "description": "Short identifier. Examples: MoCA, MMSE, MDS-UPDRS, NPI, GDS, FAQ, CDR, ADAS-Cog, BBS, 9HPT, TUG, ACE-III, MoCA-B.",
+    "collection": "RoP-Core-ClinicalInstruments",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "Abbreviation|Acronym",
+    "priority": "Recommended-for-clinical-instrument-record",
+    "metadata_": { "max_length": 32 },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": ["RoP-Core"],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "InstrumentVersion",
+    "description": "Version identifier. Critical because instrument revisions change scoring conventions, items, and total-score interpretation. Examples: 'MoCA-8.1', 'MMSE-2.0', 'MDS-UPDRS-3.0', 'NPI-Q', 'GDS-30', 'GDS-15', 'CDR-2.0', 'ADAS-Cog-13'. Two versions of the same instrument are distinct InstrumentID records.",
+    "collection": "RoP-Core-ClinicalInstruments",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "Version|Revision",
+    "priority": "Required-for-clinical-instrument-record",
+    "metadata_": { "max_length": 64 },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": ["RoP-Core"],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "InstrumentLanguage",
+    "description": "ISO 639-1 language code of the instrument administration. Different language versions of the same instrument are distinct InstrumentID records because translation and cultural adaptation affect scoring (MoCA-English, MoCA-Japanese, MoCA-Spanish-Mexico are different).",
+    "collection": "RoP-Core-ClinicalInstruments",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "Language",
+    "priority": "Required-for-clinical-instrument-record",
+    "metadata_": {
+      "format": "ISO 639-1 code with optional ISO 3166-1 region (e.g., 'en', 'es', 'es-MX', 'ja', 'zh-CN')",
+      "max_length": 16
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": ["RoP-Core"],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "InstrumentDomain",
+    "description": "Primary functional domain assessed by the instrument. Determines which Tier 11 covariates and which other instruments are appropriate to compare against.",
+    "collection": "RoP-Core-ClinicalInstruments",
+    "item_type": "enum",
+    "values": "global-cognition|domain-specific-cognition|motor|neuropsychiatric|mood|behavioral|functional-ADL|functional-IADL|quality-of-life|sleep|autonomic|olfactory|composite|other",
+    "alternate_names": "Domain|FunctionalDomain",
+    "priority": "Required-for-clinical-instrument-record",
+    "metadata_": {
+      "value_definitions": {
+        "global-cognition": "Multi-domain cognitive screening (MoCA, MMSE, ACE-III)",
+        "domain-specific-cognition": "Single-domain cognitive (e.g., RAVLT for verbal memory, BNT for naming)",
+        "motor": "Motor exam (MDS-UPDRS-III, BBS, 9HPT, TUG)",
+        "neuropsychiatric": "Neuropsychiatric symptoms (NPI, NPI-Q)",
+        "mood": "Depression/anxiety scales (GDS, BDI, HAM-D, HADS)",
+        "behavioral": "Behavioral observation scales",
+        "functional-ADL": "Basic activities of daily living",
+        "functional-IADL": "Instrumental activities of daily living (FAQ, Lawton IADL)",
+        "quality-of-life": "QoL instruments (PDQ-39, EQ-5D)",
+        "sleep": "Sleep scales (PSQI, ESS, RBDSQ)",
+        "autonomic": "Autonomic dysfunction (SCOPA-AUT, COMPASS-31)",
+        "olfactory": "Olfactory testing (UPSIT, Sniffin' Sticks)",
+        "composite": "Multi-domain composite battery (MDS-UPDRS, ADAS-Cog when used as composite)"
+      }
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": ["RoP-Core"],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "InstrumentLOINCCode",
+    "description": "LOINC panel code when one exists for the full instrument. Many widely-used instruments have LOINC codes (MMSE = 72106-8, MoCA = 72172-0 for total score). Allows direct LOINC-based meta-analysis pooling.",
+    "collection": "RoP-Core-ClinicalInstruments",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "LOINCPanelCode",
+    "priority": "Recommended-for-clinical-instrument-record",
+    "metadata_": { "format": "LOINC numeric code" },
+    "source_authority": "LOINC",
+    "source_version": "LOINC-2.78",
+    "member_of_collections": ["RoP-Core"],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "InstrumentLicense",
+    "description": "Licensing tier governing use, redistribution, and translation. Some instruments are free; others require per-use fees; others restrict translations to authorized versions only. Affects whether the instrument's items can be reproduced in published RoP collections.",
+    "collection": "RoP-Core-ClinicalInstruments",
+    "item_type": "enum",
+    "values": "open|open-with-attribution|registered-free-use|paid-license-required|restricted-distribution|proprietary|unknown",
+    "alternate_names": "License|UsageRights",
+    "priority": "Required-for-clinical-instrument-record",
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": ["RoP-Core"],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "InstrumentValidationReference",
+    "description": "DOI of the primary validation publication. Critical for reproducibility — analyses citing instrument scores should cite the validation paper, not just the instrument name. Examples: MoCA → Nasreddine et al 2005 (10.1111/j.1532-5415.2005.53221.x), MDS-UPDRS → Goetz et al 2008 (10.1002/mds.22340).",
+    "collection": "RoP-Core-ClinicalInstruments",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "ValidationPaper|PrimaryReference",
+    "priority": "Recommended-for-clinical-instrument-record",
+    "metadata_": { "format": "DOI", "max_length": 128 },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": ["RoP-Core"],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "InstrumentTotalScoreRange",
+    "description": "Plausibility bounds for the instrument's total score. JSON object {min, max, valid_increments}. Used for outlier detection and unit-error catching: a MoCA score of 38 is impossible (max=30), a GDS-15 score of 25 is impossible (max=15). Not clinical reference ranges (those are policy/locality-specific) — just plausibility for catching data errors.",
+    "collection": "RoP-Core-ClinicalInstruments",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "ScoreRange|ValidScoreBounds",
+    "priority": "Required-for-clinical-instrument-record",
+    "metadata_": {
+      "format": "JSON object",
+      "schema": {
+        "min": "minimum possible total score",
+        "max": "maximum possible total score",
+        "valid_increments": "scoring increment (1.0 for integer scores, 0.5 for half-point scoring)"
+      },
+      "example": {"min": 0, "max": 30, "valid_increments": 1.0}
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": ["RoP-Core"],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "InstrumentScoreDirection",
+    "description": "Direction of severity for the total score. Critical for downstream interpretation: cognitive batteries are typically higher-is-better (more correct items) while depression/severity scales are typically higher-is-worse. Confusing the direction is the most common scoring error in cross-cohort meta-analyses.",
+    "collection": "RoP-Core-ClinicalInstruments",
+    "item_type": "enum",
+    "values": "higher-is-better|higher-is-worse|both-extremes-are-worse|not-applicable",
+    "alternate_names": "ScoreDirection|HigherIsBetter",
+    "priority": "Required-for-clinical-instrument-record",
+    "metadata_": {
+      "value_definitions": {
+        "higher-is-better": "Higher score indicates better function (MoCA, MMSE, ADAS-Cog (note: ADAS is reverse — higher=worse, common confusion))",
+        "higher-is-worse": "Higher score indicates more severe pathology (GDS, NPI, MDS-UPDRS, ADAS-Cog)",
+        "both-extremes-are-worse": "U-shaped scoring where extreme values in either direction indicate dysfunction",
+        "not-applicable": "Categorical or non-summable"
+      },
+      "rationale": "Sign errors in score direction are silent: a meta-analysis combining MoCA with MMSE (both higher-is-better) is fine, but combining MoCA with ADAS-Cog (opposite direction) without sign correction produces meaningless results."
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": ["RoP-Core"],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "InstrumentSubscaleStructure",
+    "description": "Sub-scale decomposition for instruments that yield component scores. JSON array of {subscale_name, score_range, item_numbers}. Examples: MDS-UPDRS has Parts I/II/III/IV; MoCA has visuospatial/naming/attention/language/abstraction/delayed-recall/orientation; ADAS-Cog has cognitive subdomain breakdown. Allows component-score CDEs to be defined and validated.",
+    "collection": "RoP-Core-ClinicalInstruments",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "SubscaleStructure|ComponentScores",
+    "priority": "Recommended-for-clinical-instrument-record",
+    "metadata_": {
+      "format": "JSON array",
+      "schema_per_entry": {
+        "subscale_name": "Name of the sub-scale (e.g., 'Part III - Motor Examination')",
+        "score_range": "{min, max} for the subscale",
+        "item_numbers": "JSON array of item numbers contributing to the sub-scale",
+        "loinc_code": "LOINC code for the sub-score when one exists"
+      }
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": ["RoP-Core"],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "InstrumentNormativeReference",
+    "description": "Reference to normative data when Z-score or standardized score conversion is supported. JSON object describing the normative population (cohort name, age range, education range, source publication). Permits cross-cohort comparison via standardized scores even when raw scores aren't directly comparable.",
+    "collection": "RoP-Core-ClinicalInstruments",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "NormativeData|ReferencePopulation",
+    "priority": "Optional",
+    "metadata_": {
+      "format": "JSON object",
+      "schema": {
+        "population_name": "Name of normative cohort",
+        "age_range": "[min_age, max_age] in years",
+        "education_range": "[min_edu, max_edu] in years",
+        "n_participants": "size of normative sample",
+        "ancestry": "ancestry composition of normative sample",
+        "language": "language of normative sample",
+        "source_doi": "DOI of normative publication",
+        "z_score_formula": "formula for converting raw to Z (typically '(raw - mean) / SD')"
+      }
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": ["RoP-Core"],
+    "curation_status": "expert-curated"
+  }
+]

@@ -1,0 +1,117 @@
+[
+  {
+    "item": "IndividualID",
+    "description": "Globally unique identifier for an individual participant within the source cohort. Multiple biosamples, visits, and observations may be nested under one IndividualID. Stability is required across the lifetime of the cohort. Format and generation are cohort-defined; uniqueness must hold within the cohort. When data crosses cohort boundaries, this field should be populated with a pseudonymized derivative (e.g., HMAC of the cohort-native identifier under a per-recipient key) rather than the raw cohort identifier; the linkage to the raw identifier is preserved in IndividualAliases under appropriate access controls.",
+    "collection": "RoP-Core-Identity",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "ParticipantID|SubjectID|PatientID|PersonID|ParticipantIdentifier",
+    "priority": "Required",
+    "metadata_": {
+      "must_be_unique_within_cohort": true,
+      "stability": "must remain stable across visits, biosamples, and analyses for the lifetime of the cohort",
+      "phi_status": "treat as PHI; pseudonymize for export when crossing institutional boundaries or when required by jurisdiction",
+      "fk_target_for": ["BiosampleSubjectID", "BiosampleVisitID", "VisitSubjectID"],
+      "rationale": "All other RoP rows (biosample, visit, omics observation) attach to an individual. Without a stable individual-level key, longitudinal modeling, family-based genetic analysis, and re-contact governance all break."
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": ["RoP-Core"],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "IndividualAliases",
+    "description": "Cross-cohort and cross-system alias mapping for the same individual, supporting federated identification across sparse or distributed datasets. JSON array of {authority, identifier, linkage_method, linkage_confidence} entries. Example: a participant enrolled in PPMI as 'PPMI-3001', re-enrolled in GP2 as 'GP2-C0042-2031', and linked to UK Biobank EID '1234567' via probabilistic broker matching has three IndividualAliases entries with appropriate confidence scores. The alias map is loaded only in environments holding the appropriate Data Use Agreements; analyses that do not require federation operate on IndividualID alone.",
+    "collection": "RoP-Core-Identity",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "ParticipantAliases|CrossCohortIDs|FederatedIDs|LinkedIdentifiers",
+    "priority": "Recommended-when-cross-cohort",
+    "metadata_": {
+      "format": "JSON array",
+      "schema_per_entry": {
+        "authority": "cohort or system identifier (e.g., PPMI, GP2, ADNI, UKB, AllOfUs, NACC, local)",
+        "identifier": "cohort-native or system-native ID string",
+        "linkage_method": "deterministic | probabilistic | self-reported | broker-mediated | cryptographic-PPRL",
+        "linkage_confidence": "[0.0, 1.0]; 1.0 reserved for cryptographically verified deterministic links",
+        "linkage_date": "ISO date the linkage was established",
+        "linkage_authority": "DAC, broker, or curator who attested the linkage"
+      },
+      "rationale": "Federated cohort analyses require identity resolution without exposing direct identifiers. Without a structured alias representation, linkage knowledge lives in tribal spreadsheets and gets lost. Privacy-preserving record linkage (PPRL) workflows can populate this field with high-confidence cryptographic matches.",
+      "phi_status": "the alias map itself may constitute PHI under HIPAA or GDPR; its distribution is governed by the more restrictive of the participating cohorts' consents"
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": ["RoP-Core"],
+    "curation_status": "expert-curated"
+  },
+  {
+    "item": "IndividualExternalDatasets",
+    "description": "Structured array of external dataset and repository linkages for this individual, aligned with GA4GH service standards. Each entry describes one repository where the individual's data is accessible, the GA4GH service types offered (DRS, Beacon v2, Data Connect, Phenopackets, TES, WES, Service Registry), the appropriate endpoints, authentication requirements, and data scope available there. Together with IndividualAliases (cross-cohort identifiers) and Tier 8 DataAssetURI (specific files), this anchor closes the federation loop: a downstream consumer holding one IndividualID can mechanically resolve every repository where that individual's data lives, what services those repositories expose, what authentication is required, and what data scope is available — without having to read tribal documentation or email PIs.",
+    "collection": "RoP-Core-Identity",
+    "item_type": "string",
+    "values": null,
+    "alternate_names": "ExternalRepositoryLinks|FederatedDatasetLinks|IndividualGA4GHLinks",
+    "priority": "Recommended-when-cross-cohort",
+    "metadata_": {
+      "format": "JSON array",
+      "schema_per_entry": {
+        "repository_name": "human-readable name (PPMI, GP2, AMP-PD, AllOfUs Researcher Workbench, UK Biobank RAP, ADNI, ENCODE, GTEx, ...)",
+        "repository_id": "stable identifier (GA4GH service ID, ROR, DUNS, or registry-internal ID)",
+        "repository_role": "primary-source | derived-mirror | harmonized-aggregate | discovery-index | summary-only | analysis-platform",
+        "service_info_url": "GA4GH Service Info endpoint when available; format: https://<host>/service-info",
+        "ga4gh_services": [
+          {
+            "service_type": "DRS | Beacon-v2 | Data-Connect | Phenopackets | TES | WES | Service-Registry | non-GA4GH",
+            "endpoint_url": "service base URL",
+            "individual_endpoint": "URL or query expression scoped to this individual when applicable; e.g., 'beacon://<host>/individuals/<alias>' or 'drs://<host>/objects?subject=<alias>'",
+            "ga4gh_version": "service implementation version when known"
+          }
+        ],
+        "data_scope": "array of available data types: ['clinical', 'demographics', 'imaging', 'wgs', 'wes', 'genotyping-array', 'rnaseq', 'scRNAseq', 'proteomics', 'methylation', 'metabolomics', 'phenotype', 'summary-statistics', 'pedigree']",
+        "access_protocol": "DRS | htsget | HTTPS | OAuth2 | OIDC | DAC-mediated | Passport-mediated",
+        "requires_authentication": "boolean",
+        "ga4gh_passport_required": "boolean",
+        "passport_visa_types": "array of required visa scopes when ga4gh_passport_required=true",
+        "linkage_method": "deterministic | probabilistic | self-reported | broker-mediated | cryptographic-PPRL",
+        "linkage_date": "ISO date the linkage was established",
+        "notes": "free-text context: scope caveats, processing differences between repositories, expected latency, etc."
+      },
+      "ga4gh_alignment": {
+        "service_info_spec": "https://ga4gh-discovery.github.io/ga4gh-service-info/",
+        "drs_spec": "https://www.ga4gh.org/product/data-repository-service-drs/",
+        "beacon_v2_spec": "https://docs.genomebeacons.org/",
+        "data_connect_spec": "https://github.com/ga4gh-discovery/data-connect",
+        "phenopackets_spec": "https://phenopacket-schema.readthedocs.io/",
+        "tes_spec": "https://github.com/ga4gh/task-execution-schemas",
+        "wes_spec": "https://github.com/ga4gh/workflow-execution-service-schemas",
+        "passports_spec": "https://www.ga4gh.org/product/ga4gh-passports/"
+      },
+      "example_entry": {
+        "repository_name": "AMP-PD",
+        "repository_id": "amp-pd.org",
+        "repository_role": "harmonized-aggregate",
+        "service_info_url": "https://amp-pd.org/api/v1/service-info",
+        "ga4gh_services": [
+          {"service_type": "DRS", "endpoint_url": "https://amp-pd.org/drs/v1", "individual_endpoint": "drs://amp-pd.org/by-subject/PPMI-3001"},
+          {"service_type": "Beacon-v2", "endpoint_url": "https://beacon.amp-pd.org/v2", "individual_endpoint": "https://beacon.amp-pd.org/v2/individuals/PPMI-3001"},
+          {"service_type": "Data-Connect", "endpoint_url": "https://data-connect.amp-pd.org/v1"}
+        ],
+        "data_scope": ["clinical", "wgs", "rnaseq", "proteomics"],
+        "access_protocol": "Passport-mediated",
+        "requires_authentication": true,
+        "ga4gh_passport_required": true,
+        "passport_visa_types": ["AffiliationAndRole", "ControlledAccessGrants"],
+        "linkage_method": "deterministic",
+        "linkage_date": "2026-04-15",
+        "notes": "Harmonized cross-cohort dataset; raw cohort-specific data available via primary-source linkages."
+      },
+      "rationale": "Cross-cohort and federated analyses need to traverse from a single IndividualID to every repository where that individual's data exists, in a way that downstream tooling can mechanically resolve. Without structured external dataset linkages aligned to GA4GH service standards, this knowledge lives in tribal documentation and routinely fails to survive when datasets move. Aligning with GA4GH means the same structure works for any GA4GH-compliant repository, present or future, with no per-repository custom logic in downstream tools.",
+      "phi_status": "Repository linkage URLs may indirectly reveal participant identity; treat as PHI when participant identity could be inferred from co-occurrence in known cohorts."
+    },
+    "source_authority": "DataTecnica-derived",
+    "source_version": "RoP-2026.04",
+    "member_of_collections": ["RoP-Core"],
+    "curation_status": "expert-curated"
+  }
+]
