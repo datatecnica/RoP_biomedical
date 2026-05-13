@@ -23,6 +23,11 @@ tags:
 size_categories:
 - 1M<n<10M
 pretty_name: "RoP - Biomedical Reference of Parameters v2026.04"
+configs:
+- config_name: default
+  data_files:
+  - split: train
+    path: "v2026.04/elements.parquet"
 ---
 
 # RoP — Biomedical Reference of Parameters
