@@ -12,13 +12,13 @@
 
 ## Executive Summary
 
-**RoP solves the 6-month harmonization problem in biomedicine.**
+**RoP decreases activation energy in biomedical research by accelerating progress past the biggest bottlenecks ... data wrangling, interoperability and AI-readiness.**
 
 Right now, multi-cohort studies spend months (often years) manually mapping variables—PPMI calls it "MoCA Total Score," NACC calls it `MOCATOTS`, ADNI calls it `MOCA`. Same assessment, zero automatic compatibility. Multiply this by 500 variables across 10 cohorts, and you're looking at **person-years of manual mapping** before analysis even starts.
 
 **RoP provides 1.33 million pre-harmonized Common Data Elements (CDEs)** organized into **13 themes** covering every layer of biomedical data—from individual identity and clinical phenotypes to genomics, imaging, governance, and resource catalogs. Built on OMOP, LOINC, ICD-10, HPO, Mondo, and 9 other major vocabularies. Tag your variable with a RoP ID once—instant compatibility with 200+ studies.
 
-**This isn't aspirational. It's running in production** at GP2, NIH CARD, NACC, Answer ALS, SEA-AD, Path-ND, ASAP, BDR, BDSA, and PART consortia.
+**This isn't aspirational. It's running in production** across hundreds of thousands of samples and multiple millions of data points for collaborators leading massive federated open science initiatives.
 
 **The work behind RoP:** Weeks of planning, one weekend of compute, decades of experience dealing with biomedical data harmonization challenges. The v2026.04 release represents 6+ person-years of expert harmonization work, distilled into a 7.8 GB download.
 
@@ -145,7 +145,7 @@ Same assessment, four different variable names, no automatic way to merge them. 
 
 **The "Why":**
 
-DataTecnica builds genetic analysis platforms for neurological disease consortia — Parkinson's (GP2), Alzheimer's (CARD, NACC), ALS (Answer ALS), and multi-cohort studies (ADSP-PHC). Every project hit the same wall: **months spent harmonizing data instead of analyzing it**.
+We want to accelerate the biomedical research community. Let's make research as FAIR as possible.
 
 We built RoP to solve this for ourselves. We're releasing it **open source for non-commercial use (AGPLv3 + CC-BY-NC-4.0)** because the biomedical community needs a shared CDE reference that:
 
@@ -164,7 +164,7 @@ We built RoP to solve this for ourselves. We're releasing it **open source for n
 
 **You don't need to code to use RoP.** Here's how to get started:
 
-1. **[Submit Interest Form](https://docs.google.com/forms/d/e/1FAIpQLSfo9btfS1FxrptzAXWAMUT9bfkEJUEL0Swmg3jkEBIncGbI4A/viewform)** — discuss Forge integration for your project
+1. **[Submit Interest Form](https://docs.google.com/forms/d/e/1FAIpQLSfo9btfS1FxrptzAXWAMUT9bfkEJUEL0Swmg3jkEBIncGbI4A/viewform)** --> Let's figure out how we can help you with your project(s)
 2. **We'll help you map your data dictionary to RoP CDEs** using The Forge platform (AI-assisted, human-validated)
 3. **Your harmonization happens in <10 minutes** (vs 6 months manual crosswalk)
 
@@ -326,7 +326,6 @@ This prioritizes **redistributability** over **maximal coverage**. Users with SN
 | [`docs/GOVERNANCE.md`](docs/GOVERNANCE.md) | Forge governance model + contribution workflow |
 | [`docs/DISTRIBUTION.md`](docs/DISTRIBUTION.md) | GitHub + Hugging Face + Zenodo strategy |
 | [`docs/ROADMAP.md`](docs/ROADMAP.md) | Quarterly release schedule, planned features |
-| [`CONTRIBUTING.md`](CONTRIBUTING.md) | How to propose new anchors, vocabularies, collections |
 
 ---
 
@@ -368,8 +367,7 @@ This prioritizes **redistributability** over **maximal coverage**. Users with SN
 
 - **📋 Interest Form:** [Start here](https://docs.google.com/forms/d/e/1FAIpQLSfo9btfS1FxrptzAXWAMUT9bfkEJUEL0Swmg3jkEBIncGbI4A/viewform) (Forge integration, questions, use cases)
 - **✏️ Schema Feedback:** [Corrections & Additions Form](https://docs.google.com/forms/d/1AMvVxiTCRVtiqchtzG3hzMo0p2ix81muvJIYdcV4axw/edit?usp=sharing_eip&ts=69fe1129) (report issues, suggest new CDEs)
-- **🐛 Bug Reports:** [GitHub Issues](https://github.com/datatecnica/rop_build/issues)
-- **💬 Discussions:** [GitHub Discussions](https://github.com/datatecnica/rop_build/discussions)
+- **🐛 Bug Reports:** [GitHub Issues](https://github.com/datatecnica/RoP_biomedical/issues)
 - **📧 Email:** info@datatecnica.com
 
 **Governance:** All proposals (new anchors, sources, vocabularies) reviewed via Forge's human-in-the-loop workflow. See [`docs/GOVERNANCE.md`](docs/GOVERNANCE.md).
@@ -382,9 +380,13 @@ RoP builds on work from:
 - **NIH CARD** (Center for Alzheimer's and Related Dementias)
 - **GP2** (Global Parkinson's Genetics Program)
 - **NACC** (National Alzheimer's Coordinating Center)
-- **Answer ALS**, **SEA-AD**, **ADSP-PHC**, **ASAP**, **BDR**, **BDSA**, **PART** consortia
+- **Answer ALS**, **SEA-AD**, **ADSP-PHC**, **ASAP**, **BDR**, **BDSA**, **PART** through their connection with the Path-ND Consortium by the 10,000 Brains Project
 
 Upstream standards: OHDSI (OMOP), Regenstrief (LOINC), Monarch Initiative (HPO, Mondo), NIH (NINDS-CDE, PhenX), CDISC, GA4GH (DUO), DICOM, BIDS.
+
+---
+
+Foundational concepts for this work are based on this preprint (Long et al 2024, https://pubmed.ncbi.nlm.nih.gov/39484274/) hopefully in press very soon.
 
 ---
 
