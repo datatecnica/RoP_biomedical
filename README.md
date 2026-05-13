@@ -4,7 +4,7 @@
 
 [![License: CC-BY-NC-4.0](https://img.shields.io/badge/Data-CC--BY--NC--4.0-blue.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
 [![License: AGPL-3.0](https://img.shields.io/badge/Code-AGPL--3.0-green.svg)](https://www.gnu.org/licenses/agpl-3.0)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.XXXXXX.svg)](https://doi.org/10.5281/zenodo.XXXXXX)
+[![DOI](https://zenodo.org/badge/DOI/10.57967/hf/8781.svg)](https://doi.org/10.57967/hf/8781)
 
 **📋 Interested in using RoP?** → **[Submit Interest Form](https://docs.google.com/forms/d/e/1FAIpQLSfo9btfS1FxrptzAXWAMUT9bfkEJUEL0Swmg3jkEBIncGbI4A/viewform)** ← Start here
 
@@ -191,13 +191,13 @@ pip install huggingface_hub
 python3 -c "
 from huggingface_hub import hf_hub_download
 for f in ['elements.parquet', 'embeddings.npy', 'embeddings.faiss', 'manifest.json']:
-    hf_hub_download('datatecnica/rop', f'v2026.04/{f}', cache_dir='./rop_bundle')
+    hf_hub_download('DataTecnica/RoP_biomedical', f'v2026.04/{f}', cache_dir='./rop_bundle')
 "
 ```
 
 **Zenodo (DOI-versioned, archival):**
 ```bash
-wget https://zenodo.org/record/XXXXXX/files/rop_v2026.04.tar.gz
+wget https://huggingface.co/datasets/DataTecnica/RoP_biomedical/resolve/main/v2026.04/
 tar -xzf rop_v2026.04.tar.gz
 cd rop_v2026.04
 ```
@@ -342,8 +342,8 @@ This prioritizes **redistributability** over **maximal coverage**. Users with SN
   title        = {RoP v2026.04 - Biomedical Reference of Parameters},
   year         = {2026},
   publisher    = {Hugging Face},
-  doi          = {10.5281/zenodo.XXXXXX},
-  url          = {https://huggingface.co/datasets/datatecnica/rop}
+  doi          = {10.57967/hf/8781},
+  url          = {https://huggingface.co/datasets/DataTecnica/RoP_biomedical}
 }
 ```
 
@@ -360,7 +360,7 @@ This prioritizes **redistributability** over **maximal coverage**. Users with SN
 > This work uses RoP (Biomedical Reference of Parameters) v2026.04,
 > © 2026 Dan Vitale, Pietro Marini, Michael A. Nalls (DataTecnica),
 > licensed under CC-BY-NC-4.0 (data) + AGPLv3 (code).
-> https://doi.org/10.5281/zenodo.XXXXXX
+> https://doi.org/10.57967/hf/8781
 
 ---
 

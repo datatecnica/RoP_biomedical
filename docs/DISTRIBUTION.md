@@ -154,7 +154,7 @@ Once Zenodo DOI is assigned via Hugging Face integration:
   title        = {RoP v2026.04 - Biomedical Reference of Parameters},
   year         = {2026},
   publisher    = {Hugging Face},
-  doi          = {10.5281/zenodo.XXXXXX},
+  doi          = {10.57967/hf/8781},
   url          = {https://huggingface.co/datasets/datatecnica/rop}
 }
 ```
@@ -170,7 +170,7 @@ Once Zenodo DOI is assigned via Hugging Face integration:
 **Attribution requirement (CC-BY-NC-4.0):**
 > This work includes data from RoP (Biomedical Reference of Parameters) v2026.04,
 > © 2026 Pietro Marini, Alan Long, Hirotaka Iwaki, Mike Nalls, Dan Vitale (DataTecnica),
-> licensed under CC-BY-NC-4.0. https://doi.org/10.5281/zenodo.XXXXXX
+> licensed under CC-BY-NC-4.0. https://doi.org/10.57967/hf/8781
 > Commercial use: info@datatecnica.com
 
 ---

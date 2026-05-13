@@ -200,7 +200,7 @@ Every project hit the same harmonization wall. We built RoP + The Forge to solve
 
 **Download RoP v2026.04:**
 - 📥 Hugging Face (fastest): [datatecnica/rop](https://huggingface.co/datasets/datatecnica/rop)
-- 📚 Zenodo (DOI): [10.5281/zenodo.XXXXXX](https://doi.org/10.5281/zenodo.XXXXXX)
+- 📚 Zenodo (DOI): [10.57967/hf/8781](https://doi.org/10.57967/hf/8781)
 
 **Build from source:**
 ```bash
@@ -270,7 +270,7 @@ OHDSI (OMOP), Regenstrief (LOINC), Monarch Initiative (HPO, Mondo), NIH (NINDS-C
   title        = {RoP v2026.04 - Biomedical Reference of Parameters},
   year         = {2026},
   publisher    = {Hugging Face},
-  doi          = {10.5281/zenodo.XXXXXX},
+  doi          = {10.57967/hf/8781},
   url          = {https://huggingface.co/datasets/datatecnica/rop}
 }
 ```
