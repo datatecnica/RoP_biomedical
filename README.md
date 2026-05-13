@@ -6,7 +6,7 @@
 [![License: AGPL-3.0](https://img.shields.io/badge/Code-AGPL--3.0-green.svg)](https://www.gnu.org/licenses/agpl-3.0)
 [![DOI](https://zenodo.org/badge/DOI/10.57967/hf/8781.svg)](https://doi.org/10.57967/hf/8781)
 
-**📋 Interested in using RoP?** → **[Submit Interest Form](https://docs.google.com/forms/d/e/1FAIpQLSfo9btfS1FxrptzAXWAMUT9bfkEJUEL0Swmg3jkEBIncGbI4A/viewform)** ← Start here
+**📋 Interested in help using RoP?** → **[Submit Interest Form](https://docs.google.com/forms/d/e/1FAIpQLSfo9btfS1FxrptzAXWAMUT9bfkEJUEL0Swmg3jkEBIncGbI4A/viewform)** ← Start here
 
 ---
 
