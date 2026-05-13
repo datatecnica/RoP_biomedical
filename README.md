@@ -1,3 +1,30 @@
+---
+license: other
+license_name: CC-BY-NC-4.0 (Data) + AGPLv3 (Code)
+license_link: https://creativecommons.org/licenses/by-nc/4.0/
+task_categories:
+- feature-extraction
+language:
+- en
+tags:
+- biomedical
+- harmonization
+- common-data-elements
+- ontology
+- FAIR
+- interoperability
+- AI-readiness
+- genomics
+- clinical-data
+- neurodegeneration
+- OMOP
+- LOINC
+- ICD-10
+size_categories:
+- 1M<n<10M
+pretty_name: "RoP - Biomedical Reference of Parameters v2026.04"
+---
+
 # RoP — Biomedical Reference of Parameters
 
 > *One CDE set to rule them all...*
