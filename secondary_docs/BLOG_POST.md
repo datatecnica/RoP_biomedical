@@ -1,12 +1,15 @@
 # RoP v2026.04: AI-Assisted Data Harmonization That Actually Works
 
-**Published:** May 4, 2026
+**Published:** May 13, 2026
 **Primary Authors:** Pietro Marini, Alan Long, Hirotaka Iwaki, Mike Nalls, Dan Vitale
-**Organization:** DataTecnica ([www.datatecnica.com](https://www.datatecnica.com))
 
 ---
 
-## The Six-Month Harmonization Tax
+## Decreasing Activation Energy in Biomedical Research
+
+**RoP is 1.33 million harmonized biomedical Common Data Elements with semantic embeddings, value sets, and governance parameters that make multi-cohort research actually interoperable.**
+
+RoP decreases activation energy in biomedical research by accelerating progress past the biggest bottlenecks ... data wrangling, interoperability and AI-readiness.
 
 If you run multi-cohort biomedical studies, you know this pattern:
 
@@ -29,9 +32,8 @@ This isn't a niche problem. Every multi-cohort meta-analysis, every data catalog
 **RoP v2026.04** — 1.33 million harmonized Common Data Elements powering The Forge's AI-assisted, federated harmonization platform.
 
 **Download:**
-- 📥 [Hugging Face](https://huggingface.co/datasets/datatecnica/rop) — Pre-built bundle (7.8 GB)
-- 🔨 [GitHub](https://github.com/datatecnica/rop_build) — Build from source (7 hours on GPU)
-- 📋 [Try The Forge](https://docs.google.com/forms/d/e/1FAIpQLSfo9btfS1FxrptzAXWAMUT9bfkEJUEL0Swmg3jkEBIncGbI4A/viewform) — AI-assisted harmonization for your cohort
+- 📥 [Hugging Face](https://huggingface.co/datasets/DataTecnica/RoP_biomedical) — Pre-built bundle (7.8 GB)
+- 🔨 [GitHub](https://github.com/DataTecnica/RoP_biomedical) — Build from source (7 hours on GPU)
 
 ### The Bundle
 ```
@@ -69,7 +71,7 @@ v2026.04/
 5. **Block non-compliant data** → Violations caught at ingest, before data enters your pipeline
 6. **Federated deployment** → Each site runs Forge locally, data never leaves institution
 
-**This isn't aspirational — it's production-ready.** We're running this on GP2 (Parkinson's genetics), NIH CARD (Alzheimer's), NACC (Alzheimer's coordinating center), Answer ALS, SEA-AD, Path-ND, 10,000 Brains Project.
+**This isn't aspirational. It's running in production** across hundreds of thousands of samples and multiple millions of data points for collaborators leading massive federated open science initiatives.
 
 ---
 
@@ -182,13 +184,9 @@ Deploy Forge at each site, harmonize to shared RoP IDs, run distributed analyses
 
 ## Why We're Open-Sourcing This
 
-**DataTecnica builds genetic analysis platforms for neurological disease consortia:**
-- GP2 (Global Parkinson's Genetics Program)
-- NIH CARD (Alzheimer's / Related Dementias)
-- NACC (National Alzheimer's Coordinating Center)
-- Answer ALS, SEA-AD, Path-ND, 10,000 Brains Project, ADSP-PHC
+**We want to accelerate the biomedical research community. Let's make research as FAIR as possible.**
 
-Every project hit the same harmonization wall. We built RoP + The Forge to solve it.
+We built RoP + The Forge to solve the harmonization bottleneck we saw across every major project we worked on.
 
 **We're releasing RoP openly (AGPLv3 + CC-BY-NC)** because the field needs shared infrastructure, not siloed CDE projects.
 
@@ -199,13 +197,13 @@ Every project hit the same harmonization wall. We built RoP + The Forge to solve
 ## Get Started
 
 **Download RoP v2026.04:**
-- 📥 Hugging Face (fastest): [datatecnica/rop](https://huggingface.co/datasets/datatecnica/rop)
+- 📥 Hugging Face (fastest): [DataTecnica/RoP_biomedical](https://huggingface.co/datasets/DataTecnica/RoP_biomedical)
 - 📚 Zenodo (DOI): [10.57967/hf/8781](https://doi.org/10.57967/hf/8781)
 
 **Build from source:**
 ```bash
-git clone https://github.com/datatecnica/rop_build.git
-cd rop_build && pip install -e .
+git clone https://github.com/DataTecnica/RoP_biomedical.git
+cd RoP_biomedical && pip install -e .
 python3 scripts/sprint1_download_all.py          # Download 9 sources (6 GB)
 python3 scripts/sprint1_dedup_pass1.py           # Dedup (2 min)
 python3 scripts/generate_embeddings_direct.py    # Embed (6 hrs GPU / 30 hrs CPU)
@@ -213,7 +211,7 @@ python3 scripts/build_faiss_index.py             # Index (25 min)
 python3 scripts/package_bundle.py                # Package (1 min)
 ```
 
-**Try The Forge:**
+**Interested in help using RoP? Try The Forge:**
 [Submit Interest Form](https://docs.google.com/forms/d/e/1FAIpQLSfo9btfS1FxrptzAXWAMUT9bfkEJUEL0Swmg3jkEBIncGbI4A/viewform)
 
 ---
@@ -243,19 +241,21 @@ python3 scripts/package_bundle.py                # Package (1 min)
 
 **Collaborators:** Mette Peters, Hampton Leonard, Andy Henrie, Amara Alexander, Elise Marsan, Yang Fann, Mark Cookson, Cornelis Blauwendraat, Andy Singleton, Huw Morris, Tim Hohman, Sara Biber, John Crary, Syed Shah, Brittany Dugger, David Gutman, Chris Morris, Pat Brannelly, Liesel Jones, Mat Koretsky, Cole Tindall, Mukta Phatak, Zane Jaunmuktane, Mimi Tambi, Brandon Jernigan, Terri Thompson, Mike Karlovich, Kurt Farrell, and many more... **CDEs are a community effort.**
 
-**Partners:**
-NIH CARD, GP2, NACC, Answer ALS, SEA-AD, Path-ND, 10,000 Brains Project, ASAP, BDR, BDSA, PART
+**Collaborative Efforts:**
+NIH CARD, GP2, NACC, Answer ALS, SEA-AD, ADSP-PHC, ASAP, BDR, BDSA, PART through their connection with the Path-ND Consortium by the 10,000 Brains Project
 
 **Upstream Standards:**
 OHDSI (OMOP), Regenstrief (LOINC), Monarch Initiative (HPO, Mondo), NIH (NINDS-CDE, PhenX), CDISC, GA4GH (DUO), DICOM, BIDS
+
+**Foundational Concepts:**
+Foundational concepts for this work are based on this preprint (Long et al 2024, https://pubmed.ncbi.nlm.nih.gov/39484274/) hopefully in press very soon.
 
 ---
 
 ## Join the RoP Community
 
 - **📋 Interest Form:** [Start here](https://docs.google.com/forms/d/e/1FAIpQLSfo9btfS1FxrptzAXWAMUT9bfkEJUEL0Swmg3jkEBIncGbI4A/viewform)
-- **🐛 Bug Reports:** [GitHub Issues](https://github.com/datatecnica/rop_build/issues)
-- **💬 Discussions:** [GitHub Discussions](https://github.com/datatecnica/rop_build/discussions)
+- **🐛 Bug Reports:** [GitHub Issues](https://github.com/DataTecnica/RoP_biomedical/issues)
 - **📧 Email:** info@datatecnica.com
 
 ---
@@ -271,7 +271,7 @@ OHDSI (OMOP), Regenstrief (LOINC), Monarch Initiative (HPO, Mondo), NIH (NINDS-C
   year         = {2026},
   publisher    = {Hugging Face},
   doi          = {10.57967/hf/8781},
-  url          = {https://huggingface.co/datasets/datatecnica/rop}
+  url          = {https://huggingface.co/datasets/DataTecnica/RoP_biomedical}
 }
 ```
 

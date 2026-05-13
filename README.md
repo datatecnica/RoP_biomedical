@@ -28,7 +28,9 @@ Right now, multi-cohort studies spend months (often years) manually mapping vari
 - **FAIR by design** — Findable (DOI-versioned), Accessible (open download), Interoperable (cross-vocab mappings), Reusable (full build reproducibility)
 - **Community-governed** — human-in-the-loop validation ensures quality at scale
 
-**Technical depth:** 9 million common data model components harmonized into 1.33 million interoperable data elements, mapped to biomedical language model embeddings representing over 4,000 semantic clusters. Likely all the data points you'll ever need for interoperability and AI-readiness in biomedical research, with a particular focus on neurodegeneration.
+**Technical depth:** 1.39 million common data model components harmonized into 1.33 million interoperable data elements, mapped to biomedical language model embeddings representing over 4,000 semantic clusters. Likely all the data points you'll ever need for interoperability and AI-readiness in biomedical research, with a particular focus on neurodegeneration.
+
+![RoP v2026.04 Summary](docs/rop_v2026.04_summary.png)
 
 ---
 
