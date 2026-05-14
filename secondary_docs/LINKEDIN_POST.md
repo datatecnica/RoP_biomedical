@@ -37,7 +37,7 @@ RoP provides a shared reference covering every layer of biomedical data—from i
 
 💻 **Code & Docs:** [GitHub](https://github.com/DataTecnica/RoP_biomedical) (full documentation, build from source)
 
-📋 **Questions / Help:** [Interest Form](https://docs.google.com/forms/d/e/1FAIpQLSfo9btfS1FxrptzAXWAMUT9bfkEJUEL0Swmg3jkEBIncGbI4A/viewform)
+📋 **Questions / Help deploying:** [Interest Form](https://docs.google.com/forms/d/e/1FAIpQLSfo9btfS1FxrptzAXWAMUT9bfkEJUEL0Swmg3jkEBIncGbI4A/viewform)
 
 ✏️ **CDE Suggestions:** [Schema Feedback](https://docs.google.com/forms/d/1AMvVxiTCRVtiqchtzG3hzMo0p2ix81muvJIYdcV4axw/edit?usp=sharing_eip&ts=69fe1129)
 
@@ -47,15 +47,9 @@ RoP provides a shared reference covering every layer of biomedical data—from i
 
 **Collaborators:** Mette Peters, Hampton Leonard, Andy Henrie, Amara Alexander, Elise Marsan, Yang Fann, Mark Cookson, Cornelis Blauwendraat, Andy Singleton, Huw Morris, Tim Hohman, Sara Biber, John Crary, Syed Shah, Brittany Dugger, David Gutman, Chris Morris, Pat Brannelly, Liesel Jones, Mat Koretsky, Cole Tindall, Mukta Phatak, Zane Jaunmuktane, Mimi Tambi, Brandon Jernigan, Terri Thompson, Mike Karlovich, Kurt Farrell, and many more... **CDEs are a community effort.**
 
-**Collaborative Efforts:** NIH CARD, GP2, NACC, Answer ALS, SEA-AD, ADSP-PHC, ASAP, BDR, BDSA, PART through their connection with the Path-ND Consortium by the 10,000 Brains Project
+**Collaborative Studies:** NIH CARD, GP2, NACC, Answer ALS, SEA-AD, ADSP-PHC, ASAP, BDR, BDSA, PART through their connection with the Path-ND Consortium by the 10,000 Brains Project
 
 **Foundational Concepts:** Based on the preprint by Long et al 2024 (https://pubmed.ncbi.nlm.nih.gov/39484274/)
-
-## License
-
-**Data:** CC-BY-NC-4.0 (free for non-commercial use)
-**Code:** AGPLv3 (open source)
-**Commercial:** Contact info@datatecnica.com
 
 **Built with 🔨 by DataTecnica | [datatecnica.com](https://datatecnica.com)**
 

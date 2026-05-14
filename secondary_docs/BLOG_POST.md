@@ -75,7 +75,7 @@ v2026.04/
 
 **Collaborators:** Mette Peters, Hampton Leonard, Andy Henrie, Amara Alexander, Elise Marsan, Yang Fann, Mark Cookson, Cornelis Blauwendraat, Andy Singleton, Huw Morris, Tim Hohman, Sara Biber, John Crary, Syed Shah, Brittany Dugger, David Gutman, Chris Morris, Pat Brannelly, Liesel Jones, Mat Koretsky, Cole Tindall, Mukta Phatak, Zane Jaunmuktane, Mimi Tambi, Brandon Jernigan, Terri Thompson, Mike Karlovich, Kurt Farrell, and many more... **CDEs are a community effort.**
 
-**Collaborative Efforts:** NIH CARD, GP2, NACC, Answer ALS, SEA-AD, ADSP-PHC, ASAP, BDR, BDSA, PART through their connection with the Path-ND Consortium by the 10,000 Brains Project
+**Collaborative Studies:** NIH CARD, GP2, NACC, Answer ALS, SEA-AD, ADSP-PHC, ASAP, BDR, BDSA, PART through their connection with the Path-ND Consortium by the 10,000 Brains Project
 
 **Upstream Standards:** OHDSI (OMOP), Regenstrief (LOINC), Monarch Initiative (HPO, Mondo), NIH (NINDS-CDE, PhenX), CDISC, GA4GH (DUO), DICOM, BIDS
 
@@ -89,21 +89,6 @@ v2026.04/
 - **Code** (Python, scripts): **AGPLv3** — Open source, copyleft, non-commercial
 
 **Commercial Use:** Requires separate licensing. Contact **info@datatecnica.com**
-
----
-
-## Citation
-
-```bibtex
-@dataset{rop_v202604,
-  author       = {Vitale, Dan and Marini, Pietro and Nalls, Michael A.},
-  title        = {RoP v2026.04 - Biomedical Reference of Parameters},
-  year         = {2026},
-  publisher    = {Hugging Face},
-  doi          = {10.57967/hf/8781},
-  url          = {https://huggingface.co/datasets/DataTecnica/RoP_biomedical}
-}
-```
 
 ---
 
