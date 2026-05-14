@@ -418,6 +418,8 @@ RoP builds on work from:
 
 Upstream standards: OHDSI (OMOP), Regenstrief (LOINC), Monarch Initiative (HPO, Mondo), NIH (NINDS-CDE, PhenX), CDISC, GA4GH (DUO), DICOM, BIDS.
 
+**Special recognition:** We are deeply grateful to the **National Library of Medicine (NLM)** for their decades of foundational work in biomedical informatics and vocabulary development. NLM's efforts (including UMLS, MeSH, RxNorm, and countless other standards) have been instrumental in making semantic interoperability possible. We would be honored if any of our harmonization work could contribute back to NLM's mission in any way.
+
 ---
 
 Foundational concepts for this work are based on this preprint (Long et al 2024, https://pubmed.ncbi.nlm.nih.gov/39484274/) hopefully in press very soon.
